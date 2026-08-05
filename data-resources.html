@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>실시간 데이터 자료 · KREI·KAMIS·가락시장·통계청</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --primary:#2D5016;
+    --primary-light:#4A7C2C;
+    --primary-bg:#E8F2DE;
+    --accent:#C04A3B;
+    --accent-bg:#F6DEDA;
+    --paper:#F9FAFA;
+    --card:#FFFFFF;
+    --ink:#1C1C1C;
+    --ink-soft:#5A5A5A;
+    --line:#E5E5E5;
+    --shadow:0 1px 0 rgba(28,28,28,.04), 0 10px 30px -20px rgba(28,28,28,.4);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 20px 80px;}
+
+  .back{font-size:12px;color:var(--primary);font-weight:800;margin-bottom:20px;}
+  .back a{color:var(--primary);text-decoration:none;cursor:pointer;}
+  .header{text-align:center;margin-bottom:40px;padding-bottom:30px;border-bottom:2px solid var(--line);}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--primary);margin:0 0 10px;}
+  h1{font-size:32px;line-height:1.3;font-weight:900;margin:0 0 12px;letter-spacing:-.03em;}
+  .subtitle{font-size:15px;color:var(--ink-soft);max-width:700px;margin:0 auto;line-height:1.55;}
+
+  .section{margin-bottom:50px;}
+  .section-title{font-size:22px;font-weight:900;margin:0 0 24px;letter-spacing:-.02em;}
+  .section-title::before{content:'';display:inline-block;width:4px;height:24px;background:var(--primary);
+    margin-right:10px;border-radius:2px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-bottom:20px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow);
+    transition:transform .2s,box-shadow .2s;}
+  .card:hover{transform:translateY(-2px);box-shadow:0 2px 0 rgba(28,28,28,.06), 0 16px 40px -18px rgba(28,28,28,.45);}
+  .card .icon{font-size:32px;margin-bottom:12px;}
+  .card h3{font-size:16px;font-weight:800;margin:0 0 10px;letter-spacing:-.01em;}
+  .card p{font-size:13px;color:var(--ink-soft);margin:0 0 16px;line-height:1.5;}
+  .card a{display:inline-block;background:var(--primary);color:#fff;padding:8px 14px;border-radius:8px;
+    text-decoration:none;font-size:12px;font-weight:800;margin-right:6px;margin-bottom:6px;
+    transition:background .2s;}
+  .card a:hover{background:var(--primary-light);}
+  .card-meta{font-size:11px;color:var(--ink-soft);font-weight:600;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);}
+
+  .usage{background:var(--primary-bg);border:1px solid var(--primary);border-radius:14px;padding:18px 16px;
+    margin-bottom:20px;font-size:13px;line-height:1.6;color:var(--ink);}
+  .usage b{color:var(--primary);}
+  .usage ol{margin:10px 0;padding-left:20px;}
+  .usage li{margin:6px 0;}
+
+  .tip{background:var(--accent-bg);border:1px solid var(--accent);border-radius:12px;padding:14px;
+    margin:12px 0;font-size:12.5px;line-height:1.55;color:var(--ink);}
+  .tip b{color:var(--accent);}
+
+  .calendar{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:12px 0;}
+  .cal-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);
+    font-size:13px;}
+  .cal-row:last-child{border-bottom:none;}
+  .cal-label{font-weight:700;flex:0 0 140px;color:var(--ink);}
+  .cal-desc{color:var(--ink-soft);flex:1;}
+  .cal-mark{font-weight:800;color:var(--primary);font-size:11px;padding:2px 7px;background:var(--primary-bg);border-radius:4px;}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0;}
+  .compare-item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;font-size:12.5px;}
+  .compare-item h4{margin:0 0 10px;font-weight:800;color:var(--primary);font-size:13px;}
+  .compare-item p{margin:6px 0;line-height:1.5;}
+
+  .checklist{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .checklist-item{display:flex;align-items:flex-start;gap:10px;margin:10px 0;font-size:12.5px;line-height:1.5;}
+  .checklist-item input{flex:0 0 16px;margin-top:2px;}
+  .checklist-item label{flex:1;cursor:pointer;}
+
+  .footer{border-top:1px solid var(--line);padding-top:30px;margin-top:40px;text-align:center;font-size:12px;color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="back"><a onclick="history.back()">← 뒤로가기</a></div>
+
+  <div class="header">
+    <p class="eyebrow">실시간 데이터 자료</p>
+    <h1>농업 정보 한눈에 모아보기</h1>
+    <p class="subtitle">KREI·KAMIS·가락시장·통계청 등 모든 핵심 데이터 링크와 활용법을 정리했습니다.<br>"내년에 뭘 심을지" 결정할 때 꼭 필요한 자료들입니다.</p>
+  </div>
+
+  <!-- 최우선 -->
+  <div class="section">
+    <div class="section-title">🚀 가장 중요한 자료 (꼭 매달 확인)</div>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>KREI 농업관측센터</h3>
+        <p>품목별 월별 재배의향면적, 출하량, 도매가격 전망. "내년에 뭘 심을지"의 핵심 신호</p>
+        <a href="https://aglook.krei.re.kr" target="_blank">→ aglook.krei.re.kr</a>
+        <div class="card-meta">📌 <b>매월 갱신</b> | 한국농촌경제연구원</div>
+      </div>
+
+      <div class="card">
+        <div class="icon">💹</div>
+        <h3>aT KAMIS (가격정보)</h3>
+        <p>실시간 도·소매 가격. 어제·이번주·이번달·작년 같은 때와 비교해서 트렌드 파악 가능</p>
+        <a href="https://kamis.or.kr" target="_blank">→ kamis.or.kr</a>
+        <div class="card-meta">🔴 <b>실시간</b> | 농산물유통정보</div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🏪</div>
+        <h3>서울시농수산식품공사 (가락시장)</h3>
+        <p>가락시장 일별 반입량·경락가격. 가장 신뢰할 수 있는 실제 거래 데이터</p>
+        <a href="https://garak.co.kr" target="_blank">→ garak.co.kr</a>
+        <div class="card-meta">📈 <b>일일 업데이트</b> | 서울시 농산물</div>
+      </div>
+    </div>
+
+    <div class="usage">
+      <b>💡 어떻게 사용할까?</b>
+      <ol>
+        <li><b>KREI:</b> 매달 10일경 "농업관측" 발표. 내년 겨울 배추 면적이 크면? → "배추 가격 떨어질 가능성 높다" 판단</li>
+        <li><b>KAMIS:</b> 현재 배추 가격이 3,000원/kg이면? → "내년 배추 생산량이 적다" 신호</li>
+        <li><b>가락시장:</b> 이번주 배추 반입량과 가격으로 수급 현황 파악, 단기 가격 변동 예측</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 통계 데이터 -->
+  <div class="section">
+    <div class="section-title">📈 기초 통계 데이터</div>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>통계청 KOSIS 농작물생산조사</h3>
+        <p>공식 재배면적, 생산량, 장기 추이. 신뢰할 수 있는 기초 데이터</p>
+        <a href="https://kosis.kr" target="_blank">→ kosis.kr</a>
+        <div class="card-meta">연 1회 | 농림어업통계</div>
+      </div>
+
+      <div class="card">
+        <div class="icon">📰</div>
+        <h3>KREI 농업전망 (매년 1월)</h3>
+        <p>매년 1월 발행. 연간 품목별 수급 전망 총정리. 연간 전략 수립 때 필독</p>
+        <a href="https://www.krei.re.kr" target="_blank">→ krei.re.kr</a>
+        <div class="card-meta">연 1회 | 1월 발행</div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🌾</div>
+        <h3>농촌진흥청 홈페이지</h3>
+        <p>품목별 재배기술, 병해충 정보, 품종 추천. 영농 실전 정보</p>
+        <a href="https://www.rda.go.kr" target="_blank">→ rda.go.kr</a>
+        <div class="card-meta">항시 | 기술정보</div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎓</div>
+        <h3>농업기술센터 (지역별)</h3>
+        <p>시·군 단위 지역별 교육, 컨설팅, 품목별 기술정보. 가장 실용적</p>
+        <a href="https://www.korea.kr" target="_blank">→ 시군청 검색</a>
+        <div class="card-meta">지역별 | 무료 교육</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 월별 체크 항목 -->
+  <div class="section">
+    <div class="section-title">📅 6년 의무영농 동안 확인해야 할 것</div>
+    <div class="calendar">
+      <div class="cal-row">
+        <span class="cal-label">매월 10일경</span>
+        <span class="cal-desc">KREI 농업관측 발표 확인</span>
+        <span class="cal-mark">필수</span>
+      </div>
+      <div class="cal-row">
+        <span class="cal-label">매주 월요일</span>
+        <span class="cal-desc">KAMIS 가격 추이 확인, 전주 대비 변화율</span>
+        <span class="cal-mark">필수</span>
+      </div>
+      <div class="cal-row">
+        <span class="cal-label">매일</span>
+        <span class="cal-desc">가락시장 반입량·경락가 확인 (판매 시기 결정)</span>
+        <span class="cal-mark">필수</span>
+      </div>
+      <div class="cal-row">
+        <span class="cal-label">매년 1월</span>
+        <span class="cal-desc">KREI 농업전망 발표 및 다음해 품목 전략 수립</span>
+        <span class="cal-mark">연간</span>
+      </div>
+      <div class="cal-row">
+        <span class="cal-label">3월, 9월</span>
+        <span class="cal-desc">농업기술센터 제철 작물 무료 교육 참여</span>
+        <span class="cal-mark">추천</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- KREI 데이터 활용법 -->
+  <div class="section">
+    <div class="section-title">🔍 KREI 농업관측 읽는 방법</div>
+    <div class="usage">
+      <b>📊 핵심 지표 3가지:</b>
+      <ol>
+        <li><b>재배의향면적:</b> "내년 배추 면적이 작년보다 10% 증가한다" → 공급 증가 → 가격 하락 가능성</li>
+        <li><b>출하량 전망:</b> 실제 생산량 기반 전망. 면적보다 더 신뢰도 높음</li>
+        <li><b>도매가격 전망:</b> "평년 대비 5% 상승 예상" → 수급 상황 직접 반영</li>
+      </ol>
+    </div>
+    <div class="tip">
+      <b>⭐ 가장 중요한 규칙:</b> KREI에서 "내년 배추 면적이 크다"고 나오면, 올해 10월-11월 중에 "내년 배추는 안 하겠다" 결정을 해야 합니다. 늦으면 이미 많은 사람이 배추를 심어서 가격이 폭락합니다.
+    </div>
+  </div>
+
+  <!-- KAMIS 가격 활용법 -->
+  <div class="section">
+    <div class="section-title">💹 KAMIS 가격정보 활용하기</div>
+    <div class="compare">
+      <div class="compare-item">
+        <h4>📍 거래처 판매 VS 직판</h4>
+        <p><b>도매가격(KAMIS):</b> 5,000원/kg</p>
+        <p><b>예상 소매가:</b> 8,000원/kg</p>
+        <p>→ 직판으로 충분한 마진 가능 여부 판단</p>
+      </div>
+      <div class="compare-item">
+        <h4>🕐 판매 시기 결정</h4>
+        <p><b>예:</b> 겨울 배추 가격이 계속 하락 중</p>
+        <p>→ "더 이상 떨어질 수 있다" 판단</p>
+        <p>→ 판매 시기 연기 또는 가공으로 전환</p>
+      </div>
+    </div>
+    <div class="tip">
+      <b>💡 팁:</b> KAMIS 그래프에서 "최근 1개월 추세"를 보면 가격이 오르는 중인지 내리는 중인지 알 수 있습니다. 오르는 추세면 조금 더 기다렸다 팔고, 내리는 추세면 빨리 처분하는 게 낫습니다.
+    </div>
+  </div>
+
+  <!-- 가락시장 데이터 -->
+  <div class="section">
+    <div class="section-title">🏪 가락시장 일일 데이터 활용</div>
+    <div class="usage">
+      <b>📌 매일 확인하는 항목:</b>
+      <ol>
+        <li><b>반입량:</b> 극도로 적으면? 가격이 올라갈 신호 → 조금 더 기다려도 됨</li>
+        <li><b>경락가격:</b> 어제보다? 지난주 같은 요일보다? 단기 추이 파악</li>
+        <li><b>품질 등급별 가격:</b> 상품이 1급 가격이면 내 상품 판매가 결정 참고</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 한농대 학생용 체크리스트 -->
+  <div class="section">
+    <div class="section-title">✅ 한농대 졸업생을 위한 체크리스트</div>
+    <div class="checklist">
+      <div class="checklist-item">
+        <input type="checkbox" id="c1">
+        <label for="c1"><b>4학년 2학기:</b> KREI·KAMIS·가락시장 데이터 분석 습관 들이기. 졸업 전에 "내가 심을 작물" 3개 후보 정하기</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="c2">
+        <label for="c2"><b>군입대 전:</b> 선택한 작물의 영농기술 책 읽기, 기술센터 온라인 교육 수강</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="c3">
+        <label for="c3"><b>제대 전 3개월:</b> 지역 농협·기술센터에 문의, 초기 자금·지원금 정보 수집</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="c4">
+        <label for="c4"><b>제대 후 1개월:</b> 영농 착수. 투입비용 계산기·수익 시뮬레이션 재검증</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="c5">
+        <label for="c5"><b>연중 매달:</b> KREI 발표·KAMIS 가격 모니터링. 다음해 품목 재검토</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="c6">
+        <label for="c6"><b>6년 의무영농:</b> 매년 1월에 KREI 농업전망으로 전략 수정. 매월 수익·현금흐름 정산</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 바로가기 모음 -->
+  <div class="section">
+    <div class="section-title">🔗 한눈에 보는 링크</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
+      <a href="https://aglook.krei.re.kr" target="_blank" style="display:block;background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:14px;text-decoration:none;color:var(--primary);font-weight:800;text-align:center;transition:background .2s;">
+        📊 KREI 농업관측
+      </a>
+      <a href="https://kamis.or.kr" target="_blank" style="display:block;background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:14px;text-decoration:none;color:var(--primary);font-weight:800;text-align:center;transition:background .2s;">
+        💹 aT KAMIS
+      </a>
+      <a href="https://garak.co.kr" target="_blank" style="display:block;background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:14px;text-decoration:none;color:var(--primary);font-weight:800;text-align:center;transition:background .2s;">
+        🏪 가락시장
+      </a>
+      <a href="https://kosis.kr" target="_blank" style="display:block;background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:14px;text-decoration:none;color:var(--primary);font-weight:800;text-align:center;transition:background .2s;">
+        📈 통계청 KOSIS
+      </a>
+      <a href="https://www.rda.go.kr" target="_blank" style="display:block;background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:14px;text-decoration:none;color:var(--primary);font-weight:800;text-align:center;transition:background .2s;">
+        🌾 농촌진흥청
+      </a>
+      <a href="https://www.krei.re.kr" target="_blank" style="display:block;background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:14px;text-decoration:none;color:var(--primary);font-weight:800;text-align:center;transition:background .2s;">
+        📰 KREI 본원
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>📌 모든 정부 데이터는 공개 정보입니다. 의사결정 전에 항상 현재 정보를 직접 확인하세요.</p>
+    <p style="margin-top:12px;font-size:11px;">한농대 영농사업화 플랫폼 | 6년 의무영농 준비 도구</p>
+  </div>
+
+</div>
+</body>
+</html>

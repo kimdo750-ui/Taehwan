@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>사업계획서 자동생성 · 금융기관 제출용</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --primary:#2D5016;
+    --primary-light:#4A7C2C;
+    --primary-bg:#E8F2DE;
+    --accent:#C04A3B;
+    --accent-bg:#F6DEDA;
+    --paper:#F9FAFA;
+    --card:#FFFFFF;
+    --ink:#1C1C1C;
+    --ink-soft:#5A5A5A;
+    --line:#E5E5E5;
+    --shadow:0 1px 0 rgba(28,28,28,.04), 0 10px 30px -20px rgba(28,28,28,.4);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px;margin:0 auto;padding:30px 18px 60px;}
+  .back{font-size:12px;color:var(--primary);font-weight:800;margin-bottom:20px;}
+  .back a{color:var(--primary);text-decoration:none;cursor:pointer;}
+  .header{margin-bottom:30px;}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--primary);margin:0 0 8px;}
+  h1{font-size:28px;line-height:1.3;font-weight:800;margin:0 0 10px;letter-spacing:-.02em;}
+  .lede{font-size:14px;color:var(--ink-soft);margin:0;line-height:1.55;}
+
+  .section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin:0 0 20px;box-shadow:var(--shadow);}
+  .section h2{font-size:16px;font-weight:800;margin:0 0 16px;letter-spacing:-.01em;}
+
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 14px;}
+  .form-row.full{grid-template-columns:1fr;}
+  label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+  select,input,textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 11px;font-size:14px;font-family:inherit;}
+  select:focus,input:focus,textarea:focus{outline:none;border-color:var(--primary);}
+  textarea{resize:vertical;min-height:80px;}
+
+  .btn{display:inline-block;background:var(--primary);color:#fff;padding:12px 18px;border-radius:10px;
+    text-decoration:none;font-size:14px;font-weight:800;border:none;cursor:pointer;transition:background .2s;}
+  .btn:hover{background:var(--primary-light);}
+  .btn-block{width:100%;text-align:center;display:block;}
+  .btn-secondary{background:#666;}.btn-secondary:hover{background:#555;}
+
+  .hint{background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:12px;
+    font-size:12px;line-height:1.5;color:var(--ink);margin:14px 0;}
+  .hint b{color:var(--primary);}
+
+  .preview{display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px;margin:0 0 20px;
+    box-shadow:var(--shadow);font-size:12px;line-height:1.8;color:var(--ink);}
+  .preview h1{font-size:24px;font-weight:800;margin:0 0 10px;text-align:center;border-bottom:2px solid var(--primary);padding-bottom:10px;}
+  .preview h2{font-size:16px;font-weight:800;margin:20px 0 10px;padding-top:10px;border-top:1px solid var(--line);}
+  .preview h3{font-size:13px;font-weight:800;margin:12px 0 8px;color:var(--primary);}
+  .preview p{margin:8px 0;line-height:1.6;}
+  .preview table{width:100%;border-collapse:collapse;margin:10px 0;}
+  .preview table th,.preview table td{border:1px solid var(--line);padding:8px;text-align:left;}
+  .preview table th{background:var(--primary-bg);font-weight:800;}
+  .preview .sign{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);}
+
+  .btns{display:flex;gap:10px;margin-top:16px;}
+  .reset{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:12px;font-size:13px;font-weight:800;
+    font-family:inherit;color:var(--ink);cursor:pointer;}
+
+  .step{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13px;}
+  .step-num{flex:0 0 24px;height:24px;background:var(--primary);color:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:800;}
+  .step-text{color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="back"><a onclick="history.back()">← 뒤로가기</a></div>
+  <div class="header">
+    <p class="eyebrow">사업계획서 · 금융기관 제출용</p>
+    <h1>사업계획서 자동생성</h1>
+    <p class="lede">기본 정보와 투입비용·수익 데이터를 입력하면, 금융기관 제출용 사업계획서를 자동으로 생성합니다. 한글 문서로 다운로드해 최종 정리할 수 있습니다.</p>
+  </div>
+
+  <div class="section">
+    <h2>👤 사업자 정보</h2>
+    <div class="form-row">
+      <div>
+        <label for="name">이름</label>
+        <input id="name" type="text" placeholder="예: 홍길동">
+      </div>
+      <div>
+        <label for="birth">생년월일</label>
+        <input id="birth" type="text" placeholder="예: 2000.01.15">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="address">주소</label>
+        <input id="address" type="text" placeholder="예: 서울시 강남구 테헤란로 123">
+      </div>
+      <div>
+        <label for="phone">전화번호</label>
+        <input id="phone" type="text" placeholder="예: 010-1234-5678">
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🌾 사업 개요</h2>
+    <div class="form-row full">
+      <div>
+        <label for="crop3">작물/축산품</label>
+        <input id="crop3" type="text" placeholder="예: 포도 (가우라 품종)">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="scale3">경영 규모</label>
+        <input id="scale3" type="text" placeholder="예: 500평 (약 1,650m²)">
+      </div>
+      <div>
+        <label for="location">위치 (시도)</label>
+        <input id="location" type="text" placeholder="예: 경기도 이천시">
+      </div>
+    </div>
+    <div class="form-row full">
+      <div>
+        <label for="strategy">사업 전략</label>
+        <textarea id="strategy" placeholder="예: 고품질 포도 생산으로 도매시장 중심 판매. 2년차부터 직판 채널 추가. 5년차 브랜딩 및 수출 검토."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>💰 재정 계획</h2>
+    <div class="form-row">
+      <div>
+        <label for="initCap">초기 투입비용 (원)</label>
+        <input id="initCap" type="number" placeholder="예: 50000000">
+      </div>
+      <div>
+        <label for="ownCap">자기자본 (원)</label>
+        <input id="ownCap" type="number" placeholder="예: 10000000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="grant">정부 지원금 (원)</label>
+        <input id="grant" type="number" value="0" placeholder="예: 25000000">
+      </div>
+      <div>
+        <label for="loan">농협 대출 (원)</label>
+        <input id="loan" type="number" value="0" placeholder="예: 15000000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="annualRev">연간 예상 매출 (원)</label>
+        <input id="annualRev" type="number" placeholder="예: 80000000">
+      </div>
+      <div>
+        <label for="annualNet">연간 예상 순이익 (원)</label>
+        <input id="annualNet" type="number" placeholder="예: 12000000">
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📊 목표 및 기대효과</h2>
+    <div class="form-row full">
+      <div>
+        <label for="goal1">1년차 목표</label>
+        <textarea id="goal1" placeholder="예: 기초 영농 기술 습득, 소규모 생산 (300평), 안정적 판매망 구축"></textarea>
+      </div>
+    </div>
+    <div class="form-row full">
+      <div>
+        <label for="goal3">3년차 목표</label>
+        <textarea id="goal3" placeholder="예: 규모 확대 (500평), 도매+직판 채널 혼합, 수익 안정화"></textarea>
+      </div>
+    </div>
+    <div class="form-row full">
+      <div>
+        <label for="goal6">6년차 목표</label>
+        <textarea id="goal6" placeholder="예: 최대 규모 달성, 브랜딩 완성, 수출 물량 10% 확보"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>⚠️ 위험 관리</h2>
+    <div class="form-row full">
+      <div>
+        <label for="risks">예상 위험 요소와 대응책</label>
+        <textarea id="risks" placeholder="예:
+① 가격 변동 위험: KAMIS 정보로 사전 모니터링, 계약 재배 활용
+② 작황 부진: 농업기술센터 교육 참여, 예방약제 적극 사용
+③ 자금 부족: 연간 수익의 15% 이상 적립 기금 마련
+④ 판매 부진: 도매+직판 채널 다층화로 위험 분산"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-block" onclick="previewPlan()">📋 사업계획서 미리보기</button>
+
+  <div id="preview" class="preview"></div>
+
+  <div style="display:none;" id="btnGroup">
+    <div class="btns">
+      <button class="btn" onclick="downloadTxt()">📄 TXT 다운로드</button>
+      <button class="btn btn-secondary" onclick="copyToClipboard()">📋 복사하기</button>
+      <button class="reset" onclick="resetAll()">초기화</button>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--primary-bg);border-color:var(--primary);">
+    <h2>💡 작성 팁</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><b>투입비용:</b> <a href="investment-cost.html" style="color:var(--primary);text-decoration:none;">투입비용 계산기</a>에서 구한 금액 복사</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><b>수익 데이터:</b> <a href="profit-simulator.html" style="color:var(--primary);text-decoration:none;">수익 시뮬레이션</a>에서 구한 매출·순이익 복사</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><b>전략 및 목표:</b> 현실적이면서도 도전적인 목표 기술 (3년, 6년 구간)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text"><b>위험 관리:</b> KREI·KAMIS 데이터 기반 위험 요소와 구체적 대응책 명기</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text"><b>다운로드 후:</b> 한글 문서로 최종 정리, 농협·농업기관 제출 전 검토</div>
+    </div>
+
+    <div class="hint" style="margin-top:16px;">
+      <b>⚠️ 중요:</b> 이 도구에서 생성한 계획서는 기초 템플릿입니다.
+      <b>반드시 농업기술센터·농협 담당자와 함께 검토</b>하여 지역 실정·금융기관 요구사항을 반영해서 최종 제출하세요.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function won(n){ return Math.round(n).toLocaleString(); }
+
+function previewPlan(){
+  const name = document.getElementById('name').value || '(이름)';
+  const birth = document.getElementById('birth').value || '(생년월일)';
+  const address = document.getElementById('address').value || '(주소)';
+  const phone = document.getElementById('phone').value || '(전화)';
+  const crop = document.getElementById('crop3').value || '(작물명)';
+  const scale = document.getElementById('scale3').value || '(규모)';
+  const location = document.getElementById('location').value || '(위치)';
+  const strategy = document.getElementById('strategy').value || '(전략)';
+
+  const initCap = parseFloat(document.getElementById('initCap').value) || 0;
+  const ownCap = parseFloat(document.getElementById('ownCap').value) || 0;
+  const grant = parseFloat(document.getElementById('grant').value) || 0;
+  const loan = parseFloat(document.getElementById('loan').value) || 0;
+  const annualRev = parseFloat(document.getElementById('annualRev').value) || 0;
+  const annualNet = parseFloat(document.getElementById('annualNet').value) || 0;
+
+  const goal1 = document.getElementById('goal1').value || '(1년차 목표)';
+  const goal3 = document.getElementById('goal3').value || '(3년차 목표)';
+  const goal6 = document.getElementById('goal6').value || '(6년차 목표)';
+  const risks = document.getElementById('risks').value || '(위험 요소와 대응책)';
+
+  const breakeven = annualRev > 0 ? Math.ceil((initCap - ownCap - grant) / (annualNet || 1)) : '미산정';
+
+  const html = `
+    <h1>영농사업 사업계획서</h1>
+
+    <h2>1. 사업자 정보</h2>
+    <p><b>성명:</b> ${name}</p>
+    <p><b>생년월일:</b> ${birth}</p>
+    <p><b>주소:</b> ${address}</p>
+    <p><b>연락처:</b> ${phone}</p>
+
+    <h2>2. 사업 개요</h2>
+    <h3>2.1 사업 내용</h3>
+    <p><b>작물/축산품:</b> ${crop}</p>
+    <p><b>경영 규모:</b> ${scale}</p>
+    <p><b>위치:</b> ${location}</p>
+
+    <h3>2.2 사업 전략</h3>
+    <p>${strategy}</p>
+
+    <h2>3. 재정 계획</h2>
+    <h3>3.1 초기 투입비용</h3>
+    <table>
+      <tr><th>항목</th><th>금액</th></tr>
+      <tr><td>합계 초기 투입비</td><td>${won(initCap)}원</td></tr>
+    </table>
+
+    <h3>3.2 자금 조달</h3>
+    <table>
+      <tr><th>자금원</th><th>금액</th></tr>
+      <tr><td>자기자본</td><td>${won(ownCap)}원</td></tr>
+      <tr><td>정부 지원금</td><td>${won(grant)}원</td></tr>
+      <tr><td>농협 대출</td><td>${won(loan)}원</td></tr>
+      <tr><td><b>합계</b></td><td><b>${won(ownCap+grant+loan)}원</b></td></tr>
+    </table>
+
+    <h3>3.3 연간 수익성</h3>
+    <table>
+      <tr><th>항목</th><th>금액</th></tr>
+      <tr><td>연간 매출</td><td>${won(annualRev)}원</td></tr>
+      <tr><td>연간 순이익</td><td>${won(annualNet)}원</td></tr>
+      <tr><td>수익률</td><td>${annualRev>0 ? (annualNet/annualRev*100).toFixed(1) : '0'}%</td></tr>
+      <tr><td>손익분기점 (년)</td><td>${breakeven}년</td></tr>
+    </table>
+
+    <h2>4. 목표 설정</h2>
+    <h3>4.1 1년차 목표</h3>
+    <p>${goal1}</p>
+
+    <h3>4.2 3년차 목표</h3>
+    <p>${goal3}</p>
+
+    <h3>4.3 6년차 목표 (의무영농 종료)</h3>
+    <p>${goal6}</p>
+
+    <h2>5. 위험 관리</h2>
+    <p>${risks}</p>
+
+    <h2>6. 기대효과</h2>
+    <p>• 안정적 농업소득 창출 및 경제적 자립</p>
+    <p>• 농업 기술 축적 및 지역 농업 발전 기여</p>
+    <p>• 지속가능한 영농 사업 모델 구축</p>
+
+    <div class="sign">
+      <p>위 사항이 사실임을 증명합니다.</p>
+      <p>작성일: ${new Date().toLocaleDateString('ko-KR')}</p>
+      <p>사업자: _________________ (인)</p>
+    </div>`;
+
+  document.getElementById('preview').innerHTML = html;
+  document.getElementById('preview').style.display = 'block';
+  document.getElementById('btnGroup').style.display = 'block';
+  setTimeout(()=>document.getElementById('preview').scrollIntoView({behavior:'smooth',block:'start'}), 150);
+}
+
+function downloadTxt(){
+  const content = document.getElementById('preview').innerText;
+  const element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+  element.setAttribute('download', '영농사업계획서_' + new Date().toISOString().slice(0,10) + '.txt');
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
+
+function copyToClipboard(){
+  const content = document.getElementById('preview').innerText;
+  navigator.clipboard.writeText(content).then(()=>{
+    alert('사업계획서가 클립보드에 복사되었습니다.\n한글이나 다른 문서 편집 프로그램에 붙여넣기(Ctrl+V)하세요.');
+  });
+}
+
+function resetAll(){
+  document.getElementById('name').value = '';
+  document.getElementById('birth').value = '';
+  document.getElementById('address').value = '';
+  document.getElementById('phone').value = '';
+  document.getElementById('crop3').value = '';
+  document.getElementById('scale3').value = '';
+  document.getElementById('location').value = '';
+  document.getElementById('strategy').value = '';
+  document.getElementById('initCap').value = '';
+  document.getElementById('ownCap').value = '';
+  document.getElementById('grant').value = '0';
+  document.getElementById('loan').value = '0';
+  document.getElementById('annualRev').value = '';
+  document.getElementById('annualNet').value = '';
+  document.getElementById('goal1').value = '';
+  document.getElementById('goal3').value = '';
+  document.getElementById('goal6').value = '';
+  document.getElementById('risks').value = '';
+  document.getElementById('preview').style.display = 'none';
+  document.getElementById('btnGroup').style.display = 'none';
+}
+</script>
+</body>
+</html>

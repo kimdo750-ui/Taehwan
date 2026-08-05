@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>채널별 마진 계산 · 도매 vs 직판 vs 가공</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --bg:#F6F7F4; --card:#FFFFFF; --ink:#1C221C; --ink-soft:#616B5E; --line:#DDE1D6;
+    --ever:#26402A; --green:#3D7A34; --green-bg:#E6EFDD;
+    --amber:#B77914; --amber-bg:#F6ECD5; --grey:#8A9184; --grey-bg:#EEF0EB;
+    --b2c:#2F6BB0; --b2c-bg:#E1ECF6;
+    --shadow:0 1px 0 rgba(28,34,28,.03), 0 10px 30px -20px rgba(28,34,28,.45);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    line-height:1.55;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:600px;margin:0 auto;padding:26px 16px 60px;}
+  .back{font-size:12px;color:var(--green);font-weight:800;margin-bottom:20px;}
+  .back a{color:var(--green);text-decoration:none;cursor:pointer;}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--green);margin:0 0 8px;}
+  h1{font-size:24px;line-height:1.3;font-weight:800;margin:0 0 8px;letter-spacing:-.02em;}
+  .lede{font-size:13.5px;color:var(--ink-soft);margin:0 0 18px;}
+
+  .principle{background:var(--ever);color:#EAF1E4;border-radius:14px;padding:14px 15px;margin:0 0 18px;font-size:13px;line-height:1.5;}
+  .principle b{color:#fff;}
+
+  .legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;font-size:11px;font-weight:700;}
+  .lg{padding:3px 9px;border-radius:999px;}
+  .lg.g{background:var(--green-bg);color:var(--green);}
+  .lg.a{background:var(--amber-bg);color:var(--amber);}
+  .lg.gr{background:var(--grey-bg);color:var(--grey);}
+  .lg.c{background:var(--b2c-bg);color:var(--b2c);}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+  thead th{background:#EFF1EC;font-size:10.5px;font-weight:800;color:var(--ink-soft);padding:9px 6px;text-align:right;letter-spacing:.02em;}
+  thead th:first-child{text-align:left;padding-left:12px;}
+  tbody td{padding:9px 6px;border-top:1px solid var(--line);font-size:12.5px;text-align:right;vertical-align:middle;}
+  tbody td:first-child{text-align:left;padding-left:12px;}
+  .chname{font-weight:700;font-size:12.5px;line-height:1.25;}
+  .chtag{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:999px;margin-top:3px;}
+  .chtag.b2c{background:var(--b2c-bg);color:var(--b2c);}
+  .chtag.b2b{background:var(--grey-bg);color:var(--grey);}
+  .gradebar{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;vertical-align:middle;}
+  .gb-g{background:var(--green);} .gb-a{background:var(--amber);} .gb-gr{background:var(--grey);} .gb-mix{background:linear-gradient(90deg,var(--green),var(--amber));}
+  input.cell{width:100%;max-width:74px;border:1px solid var(--line);border-radius:7px;padding:7px 6px;font-size:12.5px;font-weight:600;
+    text-align:right;font-family:inherit;color:var(--ink);}
+  input.cell:focus{outline:none;border-color:var(--green);}
+  input.mgn{max-width:52px;background:#FBFCFA;}
+  .rev,.net{font-weight:700;color:var(--ink);white-space:nowrap;}
+  .net{color:var(--green);}
+
+  .tot{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 15px;margin-top:14px;box-shadow:var(--shadow);}
+  .tot .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;font-size:13.5px;}
+  .tot .row .k{color:var(--ink-soft);font-weight:600;}
+  .tot .row .v{font-weight:800;font-size:16px;}
+  .tot .big .v{font-size:22px;color:var(--green);}
+  .hr{height:1px;background:var(--line);margin:11px 0;}
+
+  .splitbar{height:22px;border-radius:7px;overflow:hidden;display:flex;margin:8px 0 6px;background:var(--grey-bg);}
+  .splitbar .seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#fff;white-space:nowrap;transition:width .4s;}
+  .seg.c{background:var(--b2c);} .seg.b{background:var(--grey);}
+  .splitlbl{display:flex;justify-content:space-between;font-size:11px;font-weight:700;}
+  .splitlbl .c{color:var(--b2c);} .splitlbl .b{color:var(--grey);}
+
+  .verdict{border-radius:12px;padding:13px 14px;margin-top:12px;font-size:13px;font-weight:600;line-height:1.5;}
+  .verdict.good{background:var(--green-bg);border:1px solid var(--green);color:#2c5423;}
+  .verdict.mid{background:var(--amber-bg);border:1px solid var(--amber);color:#7d5411;}
+  .verdict.warn{background:#F6DEDA;border:1px solid #B23B2E;color:#7d281e;}
+
+  .contrib{margin-top:14px;}
+  .contrib h3{font-size:12.5px;font-weight:800;margin:0 0 10px;}
+  .cbar{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:11.5px;}
+  .cbar .nm{flex:0 0 118px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .cbar .track{flex:1;height:14px;background:var(--grey-bg);border-radius:5px;overflow:hidden;}
+  .cbar .fill{height:100%;border-radius:5px;}
+  .cbar .amt{flex:0 0 auto;color:var(--ink-soft);font-weight:700;min-width:64px;text-align:right;}
+
+  .note{font-size:11px;color:var(--ink-soft);margin-top:16px;line-height:1.55;}
+  .btns{display:flex;gap:10px;margin-top:14px;}
+  .reset{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:13px;font-size:14px;font-weight:800;font-family:inherit;color:var(--ink);cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="back"><a onclick="history.back()">← 뒤로가기</a></div>
+  <p class="eyebrow">채널별 마진 분석</p>
+  <h1>도매 vs 직판 vs 가공<br>어디로 팔까?</h1>
+  <p class="lede">각 판매 채널의 물량(kg)과 kg당 단가를 입력하면, 채널별 마진률과 전체 수익 구조를 한눈에 볼 수 있습니다.</p>
+
+  <div class="principle">원칙: <b>물량의 채널(B2B·공동)이 높고, 마진은 B2C가 많다.</b> 초기에는 도매 채널로 물량을 처리하고, 시간이 지나면서 직판 비중을 높여 마진을 개선합니다.</div>
+
+  <div class="legend">
+    <span class="lg g">●  최우선</span>
+    <span class="lg a">●  중상</span>
+    <span class="lg gr">●  협력사·공동조직</span>
+    <span class="lg c">B2C(직판)</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>채널</th><th>물량<br>(kg)</th><th>단가<br>(원/kg)</th><th>마진<br>%</th><th>순마진</th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <div class="tot" id="tot"></div>
+
+  <p class="note">※ 마진률은 채널별 평균(도매·물류·손실 등 포함). 실제 순마진 = 단가×마진율−실제 출하비용. 항목별 기본값·규모·본인 비용으로 수정하세요.</p>
+  <div class="btns"><button class="reset" onclick="resetAll()">비우기</button></div>
+</div>
+
+<script>
+const CH = [
+  {n:"농협·로컬 직판소", grade:"g", type:"c", m:60},
+  {n:"전자상거래(쿠팡·마켓)", grade:"mix", type:"c", m:55},
+  {n:"카페·레스토랑", grade:"g", type:"c", m:40},
+  {n:"로컬푸드 매장", grade:"g", type:"c", m:48},
+  {n:"식품관광지", grade:"gr", type:"c", m:50},
+  {n:"도매 유통", grade:"a", type:"b", m:45},
+  {n:"급식·외식 납품", grade:"a", type:"b", m:30},
+  {n:"산지유통인", grade:"a", type:"b", m:20},
+  {n:"대형마트 납품", grade:"gr", type:"b", m:18},
+  {n:"농산물카페", grade:"g", type:"c", m:28},
+];
+const state = CH.map(c=>({qty:null, price:null, m:c.m}));
+const gradeClass = {g:"gb-g",a:"gb-a",gr:"gb-gr",mix:"gb-mix"};
+
+const rows = document.getElementById('rows');
+CH.forEach((c,i)=>{
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>
+      <div class="chname"><span class="gradebar ${gradeClass[c.grade]}"></span>${c.n}</div>
+      <span class="chtag ${c.type==='c'?'b2c':'b2b'}">${c.type==='c'?'B2C':'B2B'}</span>
+    </td>
+    <td><input class="cell" type="number" inputmode="numeric" placeholder="0" data-i="${i}" data-f="qty"></td>
+    <td><input class="cell" type="number" inputmode="numeric" placeholder="0" data-i="${i}" data-f="price"></td>
+    <td><input class="cell mgn" type="number" inputmode="numeric" value="${c.m}" data-i="${i}" data-f="m"></td>
+    <td class="net" id="net${i}">–</td>`;
+  rows.appendChild(tr);
+});
+
+document.querySelectorAll('input.cell').forEach(inp=>{
+  inp.oninput=()=>{
+    const i=+inp.dataset.i, f=inp.dataset.f;
+    const v=parseFloat(inp.value);
+    state[i][f]=isNaN(v)?null:v;
+    calc();
+  };
+});
+
+function won(n){ return Math.round(n).toLocaleString(); }
+
+function calc(){
+  let totRev=0, totNet=0, c2Rev=0, c2Net=0, b2Net=0;
+  const contribs=[];
+  state.forEach((s,i)=>{
+    const netCell=document.getElementById('net'+i);
+    if(s.qty && s.price){
+      const rev=s.qty*s.price;
+      const net=rev*((s.m||0)/100);
+      netCell.textContent=won(net);
+      totRev+=rev; totNet+=net;
+      if(CH[i].type==='c'){c2Rev+=rev; c2Net+=net;} else {b2Net+=net;}
+      contribs.push({n:CH[i].n, net, type:CH[i].type});
+    } else {
+      netCell.textContent='–';
+    }
+  });
+
+  const tot=document.getElementById('tot');
+  if(totRev===0){ tot.innerHTML='<div class="row"><span class="k">물량·단가를 입력하면 결과가 계산됩니다.</span></div>'; return; }
+
+  const wAvg = totNet/totRev*100;
+  const c2Share = totNet>0 ? c2Net/totNet*100 : 0;
+  const b2Share = 100-c2Share;
+
+  let vcls,vtxt;
+  if(c2Share>=60){ vcls='good'; vtxt='✓ 마진의 대부분을 B2C가 담당. 초기 물량 처리는 도매, 마진은 직판—이상적 구조입니다.'; }
+  else if(c2Share>=40){ vcls='mid'; vtxt='B2C 비중이 아직 미흡합니다. 직판 채널을 더 늘리면 같은 물량에도 마진이 올라갑니다.'; }
+  else { vcls='warn'; vtxt='⚠  도매 의존도가 높습니다. 물량은 처리되지만 마진이 얇습니다. 시간이 지나면서 직판 채널을 확대하세요.'; }
+
+  contribs.sort((a,b)=>b.net-a.net);
+  const maxNet=contribs[0].net||1;
+  const contribHTML = contribs.map(c=>{
+    const w=Math.max(2,(c.net/maxNet*100));
+    const col=c.type==='c'?'var(--b2c)':'var(--grey)';
+    return `<div class="cbar"><span class="nm">${c.n}</span><span class="track"><span class="fill" style="width:${w}%;background:${col}"></span></span><span class="amt">${won(c.net)}</span></div>`;
+  }).join('');
+
+  tot.innerHTML = `
+    <div class="row big"><span class="k">총 순마진</span><span class="v">${won(totNet)}원</span></div>
+    <div class="row"><span class="k">총 판매액</span><span class="v" style="font-size:15px">${won(totRev)}원</span></div>
+    <div class="row"><span class="k">평균 마진률</span><span class="v" style="font-size:15px">${wAvg.toFixed(1)}%</span></div>
+    <div class="hr"></div>
+    <div class="splitlbl"><span class="c">B2C ${c2Share.toFixed(0)}%</span><span class="b">B2B ${b2Share.toFixed(0)}%</span></div>
+    <div class="splitbar">
+      <div class="seg c" style="width:${c2Share}%">${c2Share>=14?'직판':''}</div>
+      <div class="seg b" style="width:${b2Share}%">${b2Share>=14?'도매':''}</div>
+    </div>
+    <div class="verdict ${vcls}">${vtxt}</div>
+    <div class="contrib"><h3>채널별 마진 기여</h3>${contribHTML}</div>`;
+}
+
+function resetAll(){
+  state.forEach((s,i)=>{ s.qty=null; s.price=null; s.m=CH[i].m; });
+  document.querySelectorAll('input.cell').forEach(inp=>{
+    const i=+inp.dataset.i, f=inp.dataset.f;
+    inp.value = f==='m' ? CH[i].m : '';
+  });
+  calc();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+calc();
+</script>
+</body>
+</html>

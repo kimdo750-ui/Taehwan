@@ -1,0 +1,72 @@
+{
+  "name": "영농사업 6년 사업화 플랫폼",
+  "short_name": "영농사업화",
+  "description": "한농대 졸업 후 6년 의무영농을 위한 완전한 의사결정 도구. KREI·KAMIS 실시간 데이터 기반 품목선택, 투입비용 계산, 수익 예측, 사업계획서 자동생성.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2D5016",
+  "orientation": "portrait-primary",
+  "scope": "./",
+
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232D5016' width='192' height='192'/><text x='96' y='130' font-size='120' font-weight='bold' text-anchor='middle' fill='%23fff' font-family='sans-serif'>🌾</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%232D5016' width='512' height='512'/><text x='256' y='380' font-size='300' font-weight='bold' text-anchor='middle' fill='%23fff' font-family='sans-serif'>🌾</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+
+  "categories": ["agriculture", "business", "productivity"],
+
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23F9FAFA' width='540' height='720'/><text x='270' y='350' font-size='60' text-anchor='middle' fill='%232D5016'>영농사업 플랫폼</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "품목 진단",
+      "short_name": "진단",
+      "description": "영농형태 진단 및 작물 진입 판단",
+      "url": "./diagnosis/farm-path-check.html",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text x='48' y='70' font-size='70' text-anchor='middle'>🔍</text></svg>", "sizes": "96x96", "type": "image/svg+xml"}]
+    },
+    {
+      "name": "비용 계산",
+      "short_name": "비용",
+      "description": "초기 투입비용 자동 계산",
+      "url": "./planning/investment-cost.html",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text x='48' y='70' font-size='70' text-anchor='middle'>💰</text></svg>", "sizes": "96x96", "type": "image/svg+xml"}]
+    },
+    {
+      "name": "수익 예측",
+      "short_name": "수익",
+      "description": "월별·연간 수익 시뮬레이션",
+      "url": "./planning/profit-simulator.html",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text x='48' y='70' font-size='70' text-anchor='middle'>📈</text></svg>", "sizes": "96x96", "type": "image/svg+xml"}]
+    }
+  ],
+
+  "share_target": {
+    "action": "./share",
+    "method": "POST",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

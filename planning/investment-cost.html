@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>초기 투입비용 계산 · 품목별 규모별 투입비용 추정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --primary:#2D5016;
+    --primary-light:#4A7C2C;
+    --primary-bg:#E8F2DE;
+    --accent:#C04A3B;
+    --accent-bg:#F6DEDA;
+    --paper:#F9FAFA;
+    --card:#FFFFFF;
+    --ink:#1C1C1C;
+    --ink-soft:#5A5A5A;
+    --line:#E5E5E5;
+    --green:#3D7A34;
+    --green-bg:#E6EFDD;
+    --shadow:0 1px 0 rgba(28,28,28,.04), 0 10px 30px -20px rgba(28,28,28,.4);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px;margin:0 auto;padding:30px 18px 60px;}
+  .back{font-size:12px;color:var(--primary);font-weight:800;margin-bottom:20px;}
+  .back a{color:var(--primary);text-decoration:none;cursor:pointer;}
+  .header{margin-bottom:30px;}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--primary);margin:0 0 8px;}
+  h1{font-size:28px;line-height:1.3;font-weight:800;margin:0 0 10px;letter-spacing:-.02em;}
+  .lede{font-size:14px;color:var(--ink-soft);margin:0;line-height:1.55;}
+
+  .section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin:0 0 20px;box-shadow:var(--shadow);}
+  .section h2{font-size:16px;font-weight:800;margin:0 0 16px;letter-spacing:-.01em;}
+
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 14px;}
+  .form-row.full{grid-template-columns:1fr;}
+  label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+  select,input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 11px;font-size:14px;font-family:inherit;}
+  select:focus,input:focus{outline:none;border-color:var(--primary);}
+  input[type="number"]{text-align:right;}
+  .unit{font-size:11px;color:var(--ink-soft);margin-top:4px;font-weight:600;}
+
+  .cost-item{display:flex;justify-content:space-between;align-items:center;padding:11px 12px;border-bottom:1px solid var(--line);
+    font-size:13.5px;}
+  .cost-item:last-child{border-bottom:none;}
+  .cost-item .name{font-weight:600;color:var(--ink);}
+  .cost-item .val{font-weight:700;color:var(--primary);text-align:right;min-width:100px;}
+  .cost-item.total{background:var(--primary-bg);border-radius:10px;border:1px solid var(--primary);margin-top:8px;}
+  .cost-item.total .name{font-weight:800;color:var(--primary);}
+  .cost-item.total .val{font-size:18px;color:var(--primary);}
+
+  .btn{display:inline-block;background:var(--primary);color:#fff;padding:12px 18px;border-radius:10px;
+    text-decoration:none;font-size:14px;font-weight:800;border:none;cursor:pointer;transition:background .2s;}
+  .btn:hover{background:var(--primary-light);}
+  .btn-block{width:100%;text-align:center;display:block;}
+
+  .result{display:none;margin:0 0 20px;}
+  .verdict{border-radius:16px;padding:22px;color:#fff;box-shadow:var(--shadow);}
+  .verdict.ok{background:linear-gradient(135deg,#3D7A34,#2d5a25);}
+  .verdict.warn{background:linear-gradient(135deg,#B8860B,#8a6608);}
+  .verdict.danger{background:linear-gradient(135deg,#C04A3B,#96271c);}
+  .verdict .lamp{font-size:12px;font-weight:800;letter-spacing:.1em;opacity:.9;}
+  .verdict h3{font-size:20px;font-weight:800;margin:6px 0 8px;line-height:1.3;}
+  .verdict p{margin:0;font-size:13.5px;opacity:.95;line-height:1.55;}
+
+  .detail{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:12px;}
+  .detail h3{font-size:13px;font-weight:800;margin:0 0 12px;letter-spacing:.02em;}
+  .hint{background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:12px;
+    font-size:12.5px;line-height:1.5;color:var(--ink);margin-top:14px;}
+  .hint b{color:var(--primary);}
+
+  .chart-container{margin:14px 0;}
+  .chart-bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:12px;}
+  .chart-bar .label{flex:0 0 120px;font-weight:600;color:var(--ink);}
+  .chart-bar .bar{flex:1;height:20px;background:var(--line);border-radius:4px;overflow:hidden;position:relative;}
+  .chart-bar .fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-light));
+    display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-weight:700;font-size:11px;}
+  .chart-bar .amount{flex:0 0 80px;text-align:right;font-weight:700;color:var(--primary);}
+
+  .note-box{background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:12px;
+    margin-top:14px;font-size:12px;line-height:1.5;color:var(--ink);}
+  .note-box b{color:var(--primary);}
+
+  .btns{display:flex;gap:10px;margin-top:16px;}
+  .reset{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:12px;font-size:13px;font-weight:800;
+    font-family:inherit;color:var(--ink);cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="back"><a onclick="history.back()">← 뒤로가기</a></div>
+  <div class="header">
+    <p class="eyebrow">초기 투입비용 · 자금계획</p>
+    <h1>초기 투입비용 계산기</h1>
+    <p class="lede">품목과 규모를 정하면, 시설비·종자비·인건비·운영자금 등 초기에 필요한 투입비를 자동 추정합니다.</p>
+  </div>
+
+  <div class="section">
+    <h2>📋 기본 정보</h2>
+    <div class="form-row">
+      <div>
+        <label for="crop">작물 선택</label>
+        <select id="crop" onchange="updateCropData()">
+          <option value="">선택하세요</option>
+          <option value="rice">벼 (논/수도작)</option>
+          <option value="wheat">보리/밀 (식용/사료)</option>
+          <option value="corn">옥수수 (사료/팝콘)</option>
+          <option value="soybean">콩</option>
+          <option value="fruit">과실류 (딸기·수박·포도)</option>
+          <option value="specialty">특작 (인삼·고추·마늘·양파)</option>
+          <option value="vegetable">채소 (배추·무·당근·브로콜리)</option>
+          <option value="livestock">축산 (한우·돼지·닭)</option>
+          <option value="greenhouse">시설재배 (토마토·파프리카·상추)</option>
+          <option value="orchard">과원 (포도·귤·딸기)</option>
+          <option value="other">기타</option>
+        </select>
+      </div>
+      <div>
+        <label for="scale">규모 선택 (면적/두수)</label>
+        <input id="scale" type="text" placeholder="예: 1,000평 또는 100두" onchange="calc()">
+        <div class="unit">면적: 평(㎡) 또는 두수(축산)</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="funding">초기 자금 조달 방식</label>
+        <select id="funding" onchange="calc()">
+          <option value="own">자기자본 (내 돈)</option>
+          <option value="mixed">자기자본 + 정부지원금</option>
+          <option value="mixed_loan">자기자본 + 정부지원금 + 농협대출</option>
+          <option value="full_loan">거의 대출 (추천 X)</option>
+        </select>
+      </div>
+      <div>
+        <label for="experience">영농경험</label>
+        <select id="experience" onchange="calc()">
+          <option value="none">전무 (신규 진입)</option>
+          <option value="some">1-2년 경험</option>
+          <option value="experienced">3년 이상</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🏗️ 세부 투입 항목</h2>
+    <div class="form-row">
+      <div>
+        <label for="facility">시설비 (온실·축사·수로 등, 원)</label>
+        <input id="facility" type="number" value="0" onchange="calc()">
+        <div class="unit">택지 구입은 포함 X, 리스나 임차 기준</div>
+      </div>
+      <div>
+        <label for="equipment">장비 구입 (트랙터·관리기, 원)</label>
+        <input id="equipment" type="number" value="0" onchange="calc()">
+        <div class="unit">중고 구입이나 렌탈 옵션도 고려</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="seed">종자·종우·모종 (첫해, 원)</label>
+        <input id="seed" type="number" value="0" onchange="calc()">
+        <div class="unit">재배량 기반 예상 비용</div>
+      </div>
+      <div>
+        <label for="fertilizer">비료·사료·약품 (연간, 원)</label>
+        <input id="fertilizer" type="number" value="0" onchange="calc()">
+        <div class="unit">12개월 운영 기준</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="labor">초기 인건비 (첫 6개월, 원)</label>
+        <input id="labor" type="number" value="0" onchange="calc()">
+        <div class="unit">상근자/계절 인력 평균</div>
+      </div>
+      <div>
+        <label for="operating">운영 자금 (6개월, 원)</label>
+        <input id="operating" type="number" value="0" onchange="calc()">
+        <div class="unit">전기·수도·통신·유류 등</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="education">영농교육·컨설팅 (원)</label>
+        <input id="education" type="number" value="0" onchange="calc()">
+        <div class="unit">기술센터, 농협, 대학 교육비</div>
+      </div>
+      <div>
+        <label for="contingency">예비비 (응급상황, 원)</label>
+        <input id="contingency" type="number" value="0" onchange="calc()">
+        <div class="unit">전체 투입비의 10-15% 권장</div>
+      </div>
+    </div>
+
+    <div class="hint">
+      <b>💡 항목이 없으면?</b> 아래 "품목별 표준 템플릿"에서 자동 입력된 값들이 반영됩니다.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📊 투입비 분석</h2>
+    <div id="costBreakdown"></div>
+  </div>
+
+  <button class="btn btn-block" onclick="generateResult()">투입비 분석 보기</button>
+
+  <div id="result" class="result"></div>
+
+  <div class="section" style="background:var(--primary-bg);border-color:var(--primary);">
+    <h2>🔧 품목별 표준 템플릿</h2>
+    <p style="font-size:13px;color:var(--ink-soft);margin:0 0 14px;">해당 작물의 일반적 투입비 기준을 불러와 자동 입력할 수 있습니다.</p>
+    <button class="btn" onclick="applyTemplate()">현재 선택 품목 템플릿 적용</button>
+    <div class="hint" style="margin-top:14px;">
+      <b>데이터 출처:</b> 농촌진흥청 영농소득정보, 농협 경영분석, 각 지역 농업기술센터
+    </div>
+  </div>
+
+  <div class="btns">
+    <button class="reset" onclick="resetAll()">초기화</button>
+  </div>
+
+</div>
+
+<script>
+const TEMPLATES = {
+  rice: {name: "벼", facility: 5000000, equipment: 8000000, seed: 500000, fertilizer: 2000000, labor: 5000000, operating: 3000000, education: 500000, contingency: 3000000},
+  wheat: {name: "보리/밀", facility: 2000000, equipment: 5000000, seed: 300000, fertilizer: 1000000, labor: 2000000, operating: 1000000, education: 300000, contingency: 1200000},
+  corn: {name: "옥수수", facility: 3000000, equipment: 6000000, seed: 400000, fertilizer: 1500000, labor: 3000000, operating: 1500000, education: 300000, contingency: 1600000},
+  soybean: {name: "콩", facility: 1500000, equipment: 4000000, seed: 250000, fertilizer: 800000, labor: 1500000, operating: 800000, education: 200000, contingency: 900000},
+  fruit: {name: "과실류", facility: 20000000, equipment: 5000000, seed: 3000000, fertilizer: 3000000, labor: 8000000, operating: 2000000, education: 1000000, contingency: 5000000},
+  specialty: {name: "특작", facility: 15000000, equipment: 3000000, seed: 5000000, fertilizer: 3000000, labor: 6000000, operating: 2000000, education: 800000, contingency: 4000000},
+  vegetable: {name: "채소", facility: 12000000, equipment: 2000000, seed: 2000000, fertilizer: 2000000, labor: 4000000, operating: 1500000, education: 500000, contingency: 2500000},
+  livestock: {name: "축산", facility: 50000000, equipment: 10000000, seed: 20000000, fertilizer: 8000000, labor: 15000000, operating: 5000000, education: 1000000, contingency: 10000000},
+  greenhouse: {name: "시설재배", facility: 25000000, equipment: 5000000, seed: 2000000, fertilizer: 2500000, labor: 6000000, operating: 2000000, education: 800000, contingency: 4000000},
+  orchard: {name: "과원", facility: 30000000, equipment: 4000000, seed: 5000000, fertilizer: 3000000, labor: 8000000, operating: 2000000, education: 1000000, contingency: 6000000},
+};
+
+const state = {
+  facility: 0, equipment: 0, seed: 0, fertilizer: 0,
+  labor: 0, operating: 0, education: 0, contingency: 0
+};
+
+function won(n){ return Math.round(n).toLocaleString(); }
+
+function updateCropData(){
+  document.getElementById('result').style.display = 'none';
+}
+
+function calc(){
+  const facility = parseFloat(document.getElementById('facility').value) || 0;
+  const equipment = parseFloat(document.getElementById('equipment').value) || 0;
+  const seed = parseFloat(document.getElementById('seed').value) || 0;
+  const fertilizer = parseFloat(document.getElementById('fertilizer').value) || 0;
+  const labor = parseFloat(document.getElementById('labor').value) || 0;
+  const operating = parseFloat(document.getElementById('operating').value) || 0;
+  const education = parseFloat(document.getElementById('education').value) || 0;
+  const contingency = parseFloat(document.getElementById('contingency').value) || 0;
+
+  const total = facility + equipment + seed + fertilizer + labor + operating + education + contingency;
+
+  const items = [
+    {name: "시설비", val: facility, pct: total>0 ? facility/total*100 : 0},
+    {name: "장비 구입", val: equipment, pct: total>0 ? equipment/total*100 : 0},
+    {name: "종자/모종", val: seed, pct: total>0 ? seed/total*100 : 0},
+    {name: "비료/사료/약품", val: fertilizer, pct: total>0 ? fertilizer/total*100 : 0},
+    {name: "초기 인건비", val: labor, pct: total>0 ? labor/total*100 : 0},
+    {name: "운영 자금", val: operating, pct: total>0 ? operating/total*100 : 0},
+    {name: "교육/컨설팅", val: education, pct: total>0 ? education/total*100 : 0},
+    {name: "예비비", val: contingency, pct: total>0 ? contingency/total*100 : 0},
+  ];
+
+  let html = '<div class="chart-container">';
+  items.forEach(item => {
+    if(item.val > 0) {
+      html += `<div class="chart-bar">
+        <div class="label">${item.name}</div>
+        <div class="bar"><div class="fill" style="width:${item.pct}%">${item.pct.toFixed(0)}%</div></div>
+        <div class="amount">${won(item.val)}원</div>
+      </div>`;
+    }
+  });
+  html += '</div>';
+
+  html += `<div class="cost-item total">
+    <span class="name">합계 초기 투입비</span>
+    <span class="val">${won(total)}원</span>
+  </div>`;
+
+  document.getElementById('costBreakdown').innerHTML = html;
+  document.getElementById('result').style.display = 'none';
+}
+
+function generateResult(){
+  const crop = document.getElementById('crop').value;
+  const scale = document.getElementById('scale').value;
+  const funding = document.getElementById('funding').value;
+  const experience = document.getElementById('experience').value;
+
+  if(!crop) { alert('작물을 선택해주세요'); return; }
+  if(!scale) { alert('규모를 입력해주세요'); return; }
+
+  const facility = parseFloat(document.getElementById('facility').value) || 0;
+  const equipment = parseFloat(document.getElementById('equipment').value) || 0;
+  const seed = parseFloat(document.getElementById('seed').value) || 0;
+  const fertilizer = parseFloat(document.getElementById('fertilizer').value) || 0;
+  const labor = parseFloat(document.getElementById('labor').value) || 0;
+  const operating = parseFloat(document.getElementById('operating').value) || 0;
+  const education = parseFloat(document.getElementById('education').value) || 0;
+  const contingency = parseFloat(document.getElementById('contingency').value) || 0;
+
+  const total = facility + equipment + seed + fertilizer + labor + operating + education + contingency;
+
+  if(total === 0) { alert('투입비 항목을 입력해주세요'); return; }
+
+  let cls, lamp, title, lead;
+  let ownCost = 0, grantCost = 0, loanCost = 0;
+
+  if(funding === 'own'){
+    ownCost = total;
+    cls = 'danger';
+    lamp = '⚠️ 전액 자기자본';
+    title = '가능하지만 고위험';
+    lead = '초기 자금 전액을 본인이 부담해야 합니다. 실패했을 때 손실이 크므로, 정부 지원금이나 농협 대출을 병행하는 걸 권장합니다.';
+  } else if(funding === 'mixed'){
+    ownCost = total * 0.3;
+    grantCost = total * 0.7;
+    cls = 'ok';
+    lamp = '✅ 자기자본 + 정부지원금';
+    title = '추천하는 방식';
+    lead = '초기 자본금 30%는 자기자본으로, 70%는 정부 지원금(청년농업인, 선도농인 등)으로 충당. 위험을 분산하고 성장을 가속화할 수 있습니다.';
+  } else if(funding === 'mixed_loan'){
+    ownCost = total * 0.2;
+    grantCost = total * 0.5;
+    loanCost = total * 0.3;
+    cls = 'ok';
+    lamp = '✅ 자기자본 + 지원금 + 농협대출';
+    title = '최적 구성';
+    lead = '자기자본 20%, 정부지원금 50%, 농협 대출 30%. 초기 부담을 최소화하면서 기술 습득에 집중할 수 있습니다.';
+  } else {
+    ownCost = total * 0.1;
+    grantCost = total * 0.4;
+    loanCost = total * 0.5;
+    cls = 'warn';
+    lamp = '⚠️ 대부분 대출';
+    title = '위험, 피하세요';
+    lead = '채무 비율이 너무 높으면 초기 영농 실패 시 회복 불가능한 상황이 됩니다. 더 작은 규모부터 시작하거나 지원금을 확충해야 합니다.';
+  }
+
+  const fundingDetail = `
+    <div style="margin-top:14px;font-size:13px;">
+      <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.2);">
+        <span>자기자본</span><span style="font-weight:800;">${won(ownCost)}원</span>
+      </div>
+      ${grantCost > 0 ? `<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.2);">
+        <span>정부 지원금</span><span style="font-weight:800;">${won(grantCost)}원</span>
+      </div>` : ''}
+      ${loanCost > 0 ? `<div style="display:flex;justify-content:space-between;padding:9px 0;">
+        <span>농협 대출</span><span style="font-weight:800;">${won(loanCost)}원</span>
+      </div>` : ''}
+    </div>`;
+
+  let advice = '';
+  if(experience === 'none'){
+    advice = '<b>신규 진입자:</b> 첫해는 소규모로 시작해 기술을 익히고, 2-3년차부터 규모를 늘리는 걸 권장합니다. 농업기술센터 교육에 꼭 참여하세요.';
+  } else if(experience === 'some'){
+    advice = '<b>1-2년 경험:</b> 이제 본격적으로 규모를 키울 수 있는 시점입니다. 지원금을 최대한 활용하고, 판매망을 구축하는 데 집중하세요.';
+  } else {
+    advice = '<b>3년 이상 경험:</b> 안정화 단계. 시설 현대화나 브랜딩, 수출 등 고부가가치 전략을 검토해볼 시점입니다.';
+  }
+
+  document.getElementById('result').innerHTML = `
+    <div class="verdict ${cls}">
+      <div class="lamp">${lamp}</div>
+      <h3>${title}</h3>
+      <p>${lead}</p>
+      <div style="margin-top:16px;padding:12px;background:rgba(0,0,0,.15);border-radius:8px;">
+        <div style="font-size:11.5px;opacity:.9;">💰 초기 투입비 규모</div>
+        <div style="font-size:20px;font-weight:800;margin-top:4px;">${won(total)}원</div>
+      </div>
+      ${fundingDetail}
+    </div>
+
+    <div class="detail">
+      <h3>📋 추가 안내</h3>
+      <div style="font-size:13px;line-height:1.6;color:var(--ink);">
+        <p><b>경영 규모:</b> ${scale}</p>
+        <p><b>영농 경험:</b> ${experience === 'none' ? '전무 (신규)' : (experience === 'some' ? '1-2년' : '3년 이상')}</p>
+        <p style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line);">${advice}</p>
+      </div>
+    </div>
+
+    <div class="note-box" style="background:var(--accent-bg);border-color:var(--accent);color:var(--ink);">
+      <b>⚠️ 주의:</b> 이 계산은 추정치입니다. 실제 투입비는 지역·계절·시장상황에 따라 크게 달라집니다.
+      <b>반드시 농협·농업기술센터·지역 선배농과 상담 후 최종 결정하세요.</b>
+    </div>
+
+    <div class="section" style="margin-top:20px;border:1px solid var(--line);">
+      <h3>🎯 다음 단계</h3>
+      <div style="font-size:13px;line-height:1.8;color:var(--ink-soft);">
+        <p>✓ <b>정부 지원금 확인:</b> <a href="../support/subsidy-guide.html" style="color:var(--primary);text-decoration:none;font-weight:700;">지원금 안내 페이지</a>에서 신청 가능한 지원금 확인</p>
+        <p>✓ <b>수익성 검증:</b> <a href="profit-simulator.html" style="color:var(--primary);text-decoration:none;font-weight:700;">수익 시뮬레이션</a> 도구로 월별·연간 수익 계산</p>
+        <p>✓ <b>사업 계획서 작성:</b> <a href="business-plan-generator.html" style="color:var(--primary);text-decoration:none;font-weight:700;">사업계획서 자동생성</a> 도구로 금융기관 제출용 문서 생성</p>
+      </div>
+    </div>`;
+
+  document.getElementById('result').style.display = 'block';
+  setTimeout(()=>document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'}), 150);
+}
+
+function applyTemplate(){
+  const crop = document.getElementById('crop').value;
+  if(!crop || !TEMPLATES[crop]){
+    alert('작물을 먼저 선택해주세요');
+    return;
+  }
+  const t = TEMPLATES[crop];
+  document.getElementById('facility').value = t.facility;
+  document.getElementById('equipment').value = t.equipment;
+  document.getElementById('seed').value = t.seed;
+  document.getElementById('fertilizer').value = t.fertilizer;
+  document.getElementById('labor').value = t.labor;
+  document.getElementById('operating').value = t.operating;
+  document.getElementById('education').value = t.education;
+  document.getElementById('contingency').value = t.contingency;
+  calc();
+}
+
+function resetAll(){
+  document.getElementById('crop').value = '';
+  document.getElementById('scale').value = '';
+  document.getElementById('funding').value = 'own';
+  document.getElementById('experience').value = 'none';
+  Object.keys(state).forEach(k => {
+    document.getElementById(k).value = 0;
+  });
+  document.getElementById('costBreakdown').innerHTML = '';
+  document.getElementById('result').style.display = 'none';
+}
+</script>
+</body>
+</html>

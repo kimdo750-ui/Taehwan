@@ -1,0 +1,74 @@
+{
+  "platforms": {
+    "threads": {
+      "enabled": true,
+      "description": "Meta Threads (인스타그램 스레드)",
+      "schedule": "20:30 KST",
+      "reply_check": "3시간마다",
+      "api_version": "v1.0",
+      "auth_type": "access_token"
+    },
+    "instagram": {
+      "enabled": false,
+      "description": "인스타그램 (향후 추가)",
+      "schedule": "19:00 KST",
+      "api_version": "v18.0",
+      "auth_type": "access_token"
+    },
+    "twitter": {
+      "enabled": false,
+      "description": "X (Twitter) (향후 추가)",
+      "schedule": "08:00, 14:00 KST",
+      "api_version": "v2",
+      "auth_type": "bearer_token"
+    },
+    "telegram": {
+      "enabled": false,
+      "description": "텔레그램 채널 (향후 추가)",
+      "schedule": "09:00 KST",
+      "api_version": "bot_api",
+      "auth_type": "bot_token"
+    },
+    "naver_blog": {
+      "enabled": false,
+      "description": "네이버 블로그 (향후 추가)",
+      "schedule": "10:00 KST",
+      "auth_type": "oauth2"
+    }
+  },
+
+  "content_strategy": {
+    "posting_cycle": "매일 1회",
+    "weekly_focus": {
+      "monday": "영농형태 진단 & 품목선택",
+      "tuesday": "KREI 데이터 읽는법",
+      "wednesday": "초기 투입비용 계산",
+      "thursday": "수익 시뮬레이션",
+      "friday": "사업계획서 작성",
+      "saturday": "정부 지원금 안내",
+      "sunday": "위험 관리 체크리스트"
+    },
+    "hashtags": {
+      "korean": ["#영농사업화", "#농업기술", "#한농대", "#청년농업", "#사업계획", "#농사"],
+      "general": ["#농사", "#영농", "#농업인", "#6년의무영농", "#농사계획"]
+    },
+    "mentions": {
+      "partners": ["@한국농수산대학", "@농림축산식품부", "@농협", "@농촌진흥청"],
+      "targets": ["청년농업인", "한농대 학생", "예비농업인"]
+    }
+  },
+
+  "engagement": {
+    "reply_keyword": "✓",
+    "reply_template": "'✓' 남겨주신 분께 영농사업화 도구 안내",
+    "auto_follow": false,
+    "interaction_hours": "09:00-22:00 KST"
+  },
+
+  "analytics": {
+    "track_views": true,
+    "track_engagement": true,
+    "track_click_through": true,
+    "weekly_report": true
+  }
+}

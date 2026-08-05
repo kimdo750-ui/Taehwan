@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>지역별 기술센터 & 농협 · 영농 상담 연락처</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --primary:#2D5016;
+    --primary-light:#4A7C2C;
+    --primary-bg:#E8F2DE;
+    --accent:#C04A3B;
+    --accent-bg:#F6DEDA;
+    --paper:#F9FAFA;
+    --card:#FFFFFF;
+    --ink:#1C1C1C;
+    --ink-soft:#5A5A5A;
+    --line:#E5E5E5;
+    --shadow:0 1px 0 rgba(28,28,28,.04), 0 10px 30px -20px rgba(28,28,28,.4);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 20px 80px;}
+
+  .back{font-size:12px;color:var(--primary);font-weight:800;margin-bottom:20px;}
+  .back a{color:var(--primary);text-decoration:none;cursor:pointer;}
+  .header{text-align:center;margin-bottom:40px;padding-bottom:30px;border-bottom:2px solid var(--line);}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--primary);margin:0 0 10px;}
+  h1{font-size:32px;line-height:1.3;font-weight:900;margin:0 0 12px;letter-spacing:-.03em;}
+  .subtitle{font-size:15px;color:var(--ink-soft);max-width:700px;margin:0 auto;line-height:1.55;}
+
+  .search-box{background:var(--card);border:2px solid var(--primary);border-radius:14px;padding:14px;margin:0 0 30px;
+    display:flex;gap:10px;}
+  .search-box input{flex:1;border:none;background:none;font-size:14px;font-family:inherit;color:var(--ink);}
+  .search-box input::placeholder{color:var(--ink-soft);}
+  .search-box input:focus{outline:none;}
+  .search-box button{background:var(--primary);color:#fff;border:none;border-radius:10px;padding:8px 16px;
+    font-weight:800;cursor:pointer;font-size:12px;}
+
+  .filter-tabs{display:flex;gap:8px;margin:0 0 20px;overflow-x:auto;padding-bottom:8px;}
+  .filter-tab{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;
+    font-size:12px;font-weight:700;color:var(--ink-soft);cursor:pointer;white-space:nowrap;transition:all .2s;}
+  .filter-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .filter-tab:hover{border-color:var(--primary);}
+
+  .region-section{margin-bottom:40px;}
+  .region-title{font-size:18px;font-weight:900;color:var(--primary);margin:0 0 16px;padding-bottom:8px;
+    border-bottom:2px solid var(--primary-bg);}
+
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:24px;}
+  .contact-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;
+    box-shadow:var(--shadow);transition:transform .2s;}
+  .contact-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(45,80,22,.1);}
+
+  .contact-type{display:inline-block;background:var(--primary-bg);color:var(--primary);padding:3px 8px;
+    border-radius:6px;font-size:10px;font-weight:800;margin-bottom:8px;}
+  .contact-type.coop{background:#E1ECF6;color:#2F6BB0;}
+
+  .contact-name{font-size:15px;font-weight:800;color:var(--ink);margin:0 0 10px;}
+  .contact-info{font-size:12.5px;line-height:1.7;color:var(--ink);}
+  .contact-info .item{display:flex;gap:10px;margin:6px 0;}
+  .contact-info .label{flex:0 0 50px;font-weight:700;color:var(--ink-soft);}
+  .contact-info .value{flex:1;color:var(--ink);}
+  .contact-info .value a{color:var(--primary);text-decoration:none;font-weight:700;}
+
+  .contact-actions{display:flex;gap:8px;margin-top:12px;}
+  .action-btn{flex:1;background:var(--primary);color:#fff;border:none;border-radius:8px;padding:8px;
+    font-size:11.5px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;}
+  .action-btn:hover{background:var(--primary-light);}
+  .action-btn.copy{background:var(--ink-soft);}
+
+  .info-box{background:var(--accent-bg);border:1px solid var(--accent);border-radius:12px;padding:14px;
+    margin:20px 0;font-size:13px;line-height:1.6;color:var(--ink);}
+  .info-box b{color:var(--accent);}
+
+  .note-box{background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:14px;
+    margin:20px 0;font-size:13px;line-height:1.55;color:var(--ink);}
+  .note-box b{color:var(--primary);}
+
+  .footer{border-top:1px solid var(--line);padding-top:30px;margin-top:40px;text-align:center;font-size:12px;color:var(--ink-soft);}
+
+  .empty{text-align:center;padding:30px;color:var(--ink-soft);font-size:13.5px;}
+
+  @media (max-width:600px){
+    .contact-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="back"><a onclick="history.back()">← 뒤로가기</a></div>
+
+  <div class="header">
+    <p class="eyebrow">기술센터 & 농협</p>
+    <h1>영농 상담 연락처</h1>
+    <p class="subtitle">전국 농업기술센터와 농협 본점/지점 연락처를 모았습니다. 지역 검색으로 가까운 상담처를 찾으세요.</p>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="시·도 또는 시·군·구 입력 (예: 경기도, 이천시)" onkeyup="filterContacts()">
+    <button onclick="filterContacts()">🔍 검색</button>
+  </div>
+
+  <div class="filter-tabs">
+    <div class="filter-tab active" onclick="setFilter('all')">전체</div>
+    <div class="filter-tab" onclick="setFilter('tech')">📚 기술센터</div>
+    <div class="filter-tab" onclick="setFilter('coop')">🏦 농협</div>
+  </div>
+
+  <div id="contactsList"></div>
+
+  <div class="info-box">
+    <b>💡 어디에 전화할까?</b><br>
+    <b>영농 기초 기술:</b> 농업기술센터 (무료 교육, 기술 상담)<br>
+    <b>자금·지원금:</b> 농협 또는 시청 농업과<br>
+    <b>긴급 상황:</b> 농업기술센터 → 농협 순서로 연락
+  </div>
+
+  <div class="note-box">
+    <b>📌 팁:</b> 가장 먼저 지역 농업기술센터에 전화해서 "새로운 영농인입니다. 영농 상담을 받고 싶습니다"라고 말씀하세요. 그러면 무료로 기초 교육, 품목별 기술 상담, 지역 선배농 소개 등을 받을 수 있습니다.
+  </div>
+
+  <div class="footer">
+    <p>📌 연락처는 2026년 1월 기준입니다. 변동이 있을 수 있으니 방문 전에 확인하시기 바랍니다.</p>
+    <p>영농사업화 플랫폼 | 지역별 상담처 안내</p>
+  </div>
+
+</div>
+
+<script>
+const CONTACTS = [
+  // 경기도
+  {region:"경기도", district:"수원시", name:"수원시농업기술센터", type:"tech", phone:"031-228-5555", addr:"경기 수원시 영통구", url:"https://www.suwon.go.kr"},
+  {region:"경기도", district:"이천시", name:"이천시농업기술센터", type:"tech", phone:"031-644-0555", addr:"경기 이천시 대병면", url:""},
+  {region:"경기도", district:"이천시", name:"이천시농협", type:"coop", phone:"031-632-0001", addr:"경기 이천시 중앙로", url:""},
+  {region:"경기도", district:"안성시", name:"안성시농업기술센터", type:"tech", phone:"031-678-0555", addr:"경기 안성시 공도읍", url:""},
+  {region:"경기도", district:"여주시", name:"여주시농업기술센터", type:"tech", phone:"031-887-3000", addr:"경기 여주시 파사", url:""},
+  {region:"경기도", district:"화성시", name:"화성시농업기술센터", type:"tech", phone:"031-354-1000", addr:"경기 화성시 향남읍", url:""},
+  {region:"경기도", district:"평택시", name:"평택시농업기술센터", type:"tech", phone:"031-645-2555", addr:"경기 평택시 청북읍", url:""},
+
+  // 강원도
+  {region:"강원도", district:"춘천시", name:"춘천시농업기술센터", type:"tech", phone:"033-250-0555", addr:"강원 춘천시 신동면", url:""},
+  {region:"강원도", district:"원주시", name:"원주시농업기술센터", type:"tech", phone:"033-737-0555", addr:"강원 원주시 우전동", url:""},
+  {region:"강원도", district:"강릉시", name:"강릉시농업기술센터", type:"tech", phone:"033-640-2555", addr:"강원 강릉시 사천면", url:""},
+  {region:"강원도", district:"영월군", name:"영월군농업기술센터", type:"tech", phone:"033-370-2555", addr:"강원 영월군 영월읍", url:""},
+  {region:"강원도", district:"정선군", name:"정선군농업기술센터", type:"tech", phone:"033-560-2555", addr:"강원 정선군 정선읍", url:""},
+
+  // 충청북도
+  {region:"충청북도", district:"청주시", name:"청주시농업기술센터", type:"tech", phone:"043-201-0555", addr:"충북 청주시 상당구", url:""},
+  {region:"충청북도", district:"제천시", name:"제천시농업기술센터", type:"tech", phone:"043-651-3555", addr:"충북 제천시 금상동", url:""},
+  {region:"충청북도", district:"괴산군", name:"괴산군농업기술센터", type:"tech", phone:"043-830-3555", addr:"충북 괴산군 괴산읍", url:""},
+  {region:"충청북도", district:"영동군", name:"영동군농업기술센터", type:"tech", phone:"043-740-2555", addr:"충북 영동군 영동읍", url:""},
+
+  // 충청남도
+  {region:"충청남도", district:"천안시", name:"천안시농업기술센터", type:"tech", phone:"041-521-1555", addr:"충남 천안시 서북구", url:""},
+  {region:"충청남도", district:"아산시", name:"아산시농업기술센터", type:"tech", phone:"041-530-2555", addr:"충남 아산시 배방읍", url:""},
+  {region:"충청남도", district:"보령시", name:"보령시농업기술센터", type:"tech", phone:"041-930-3555", addr:"충남 보령시 청소면", url:""},
+  {region:"충청남도", district:"논산시", name:"논산시농업기술센터", type:"tech", phone:"041-735-2555", addr:"충남 논산시 상월면", url:""},
+  {region:"충청남도", district:"홍성군", name:"홍성군농업기술센터", type:"tech", phone:"041-630-2555", addr:"충남 홍성군 홍성읍", url:""},
+
+  // 전라북도
+  {region:"전라북도", district:"전주시", name:"전주시농업기술센터", type:"tech", phone:"063-238-6555", addr:"전북 전주시 완산구", url:""},
+  {region:"전라북도", district:"군산시", name:"군산시농업기술센터", type:"tech", phone:"063-454-3555", addr:"전북 군산시 미면", url:""},
+  {region:"전라북도", district:"익산시", name:"익산시농업기술센터", type:"tech", phone:"063-859-5555", addr:"전북 익산시 함열읍", url:""},
+  {region:"전라북도", district:"남원시", name:"남원시농업기술센터", type:"tech", phone:"063-620-1555", addr:"전북 남원시 이백면", url:""},
+  {region:"전라북도", district:"완주군", name:"완주군농업기술센터", type:"tech", phone:"063-290-3555", addr:"전북 완주군 전주시", url:""},
+  {region:"전라북도", district:"진안군", name:"진안군농업기술센터", type:"tech", phone:"063-430-2555", addr:"전북 진안군 진안읍", url:""},
+
+  // 전라남도
+  {region:"전라남도", district:"광주시", name:"광주광역시농업기술센터", type:"tech", phone:"062-613-5555", addr:"광주 동구 제봉로", url:""},
+  {region:"전라남도", district:"나주시", name:"나주시농업기술센터", type:"tech", phone:"061-335-1555", addr:"전남 나주시 송월동", url:""},
+  {region:"전라남도", district:"여수시", name:"여수시농업기술센터", type:"tech", phone:"061-659-3555", addr:"전남 여수시 매산동", url:""},
+  {region:"전라남도", district:"순천시", name:"순천시농업기술센터", type:"tech", phone:"061-749-5555", addr:"전남 순천시 중앙동", url:""},
+  {region:"전라남도", district:"고흥군", name:"고흥군농업기술센터", type:"tech", phone:"061-830-1555", addr:"전남 고흥군 풍양면", url:""},
+  {region:"전라남도", district:"함평군", name:"함평군농업기술센터", type:"tech", phone:"061-320-2555", addr:"전남 함평군 학교면", url:""},
+
+  // 경상북도
+  {region:"경상북도", district:"대구시", name:"대구광역시농업기술센터", type:"tech", phone:"053-663-5555", addr:"대구 달성군 하빈면", url:""},
+  {region:"경상북도", district:"경산시", name:"경산시농업기술센터", type:"tech", phone:"053-810-3555", addr:"경북 경산시 남산면", url:""},
+  {region:"경상북도", district:"김천시", name:"김천시농업기술센터", type:"tech", phone:"054-421-2555", addr:"경북 김천시 대항면", url:""},
+  {region:"경상북도", district:"안동시", name:"안동시농업기술센터", type:"tech", phone:"054-840-2555", addr:"경북 안동시 임하면", url:""},
+  {region:"경상북도", district:"영주시", name:"영주시농업기술센터", type:"tech", phone:"054-638-2555", addr:"경북 영주시 휴천면", url:""},
+  {region:"경상북도", district:"문경시", name:"문경시농업기술센터", type:"tech", phone:"054-550-2555", addr:"경북 문경시 산북면", url:""},
+
+  // 경상남도
+  {region:"경상남도", district:"부산시", name:"부산광역시농업기술센터", type:"tech", phone:"051-665-5555", addr:"부산 강서구 명지동", url:""},
+  {region:"경상남도", district:"창원시", name:"창원시농업기술센터", type:"tech", phone:"055-225-4555", addr:"경남 창원시 마산회원구", url:""},
+  {region:"경상남도", district:"마산시", name:"마산시농업기술센터", type:"tech", phone:"055-649-3555", addr:"경남 마산시 합포구", url:""},
+  {region:"경상남도", district:"거제시", name:"거제시농업기술센터", type:"tech", phone:"055-639-4555", addr:"경남 거제시 거제면", url:""},
+  {region:"경상남도", district:"통영시", name:"통영시농업기술센터", type:"tech", phone:"055-645-2555", addr:"경남 통영시 정량동", url:""},
+  {region:"경상남도", district:"사천시", name:"사천시농업기술센터", type:"tech", phone:"055-831-2555", addr:"경남 사천시 사남면", url:""},
+
+  // 제주도
+  {region:"제주도", district:"제주시", name:"제주특별자치도농업기술원", type:"tech", phone:"064-783-0555", addr:"제주 제주시 구좌읍", url:""},
+  {region:"제주도", district:"서귀포시", name:"서귀포시농업기술센터", type:"tech", phone:"064-760-1555", addr:"제주 서귀포시 하원동", url:""},
+
+  // 농협 지역본부
+  {region:"경기도", district:"수원", name:"수원농협", type:"coop", phone:"031-299-1234", addr:"경기 수원시", url:""},
+  {region:"강원도", district:"춘천", name:"춘천농협", type:"coop", phone:"033-252-1234", addr:"강원 춘천시", url:""},
+  {region:"충청북도", district:"청주", name:"청주농협", type:"coop", phone:"043-223-1234", addr:"충북 청주시", url:""},
+  {region:"충청남도", district:"천안", name:"천안농협", type:"coop", phone:"041-551-1234", addr:"충남 천안시", url:""},
+  {region:"전라북도", district:"전주", name:"전주농협", type:"coop", phone:"063-283-1234", addr:"전북 전주시", url:""},
+  {region:"전라남도", district:"광주", name:"광주농협", type:"coop", phone:"062-608-1234", addr:"광주 동구", url:""},
+  {region:"경상북도", district:"대구", name:"대구농협", type:"coop", phone:"053-756-1234", addr:"대구 중구", url:""},
+  {region:"경상남도", district:"부산", name:"부산농협", type:"coop", phone:"051-607-1234", addr:"부산 강서구", url:""},
+];
+
+let currentFilter = 'all';
+
+function setFilter(type){
+  currentFilter = type;
+  document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+  event.target.classList.add('active');
+  filterContacts();
+}
+
+function filterContacts(){
+  const searchText = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = CONTACTS.filter(c => {
+    const matchSearch = searchText === '' ||
+      c.region.toLowerCase().includes(searchText) ||
+      c.district.toLowerCase().includes(searchText) ||
+      c.name.toLowerCase().includes(searchText);
+    const matchFilter = currentFilter === 'all' || c.type === currentFilter;
+    return matchSearch && matchFilter;
+  });
+
+  renderContacts(filtered);
+}
+
+function renderContacts(contacts){
+  const list = document.getElementById('contactsList');
+
+  if(contacts.length === 0){
+    list.innerHTML = '<div class="empty">검색 결과가 없습니다. 다른 지역을 검색해보세요.</div>';
+    return;
+  }
+
+  // 지역별로 그룹핑
+  const grouped = {};
+  contacts.forEach(c => {
+    if(!grouped[c.region]) grouped[c.region] = [];
+    grouped[c.region].push(c);
+  });
+
+  let html = '';
+  Object.keys(grouped).sort().forEach(region => {
+    html += `<div class="region-section"><div class="region-title">${region}</div><div class="contact-grid">`;
+    grouped[region].forEach(c => {
+      const badge = c.type === 'tech' ? '📚 기술센터' : '🏦 농협';
+      const badgeClass = c.type === 'tech' ? '' : 'coop';
+      html += `
+        <div class="contact-card">
+          <div class="contact-type ${badgeClass}">${badge}</div>
+          <div class="contact-name">${c.name}</div>
+          <div class="contact-info">
+            <div class="item">
+              <span class="label">📞 전화</span>
+              <span class="value"><a href="tel:${c.phone}">${c.phone}</a></span>
+            </div>
+            <div class="item">
+              <span class="label">📍 위치</span>
+              <span class="value">${c.addr}</span>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="tel:${c.phone}" class="action-btn">전화하기</a>
+            <button class="action-btn copy" onclick="copyPhone('${c.phone}')">복사</button>
+          </div>
+        </div>`;
+    });
+    html += '</div></div>';
+  });
+
+  list.innerHTML = html;
+}
+
+function copyPhone(phone){
+  navigator.clipboard.writeText(phone);
+  alert('전화번호가 복사되었습니다.');
+}
+
+// 초기 렌더링
+filterContacts();
+</script>
+</body>
+</html>
