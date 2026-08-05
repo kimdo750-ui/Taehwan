@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SNS 자동화 · 영농사업 6년 사업화 플랫폼</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --primary:#2D5016;
+    --primary-light:#4A7C2C;
+    --primary-bg:#E8F2DE;
+    --secondary:#B8860B;
+    --secondary-bg:#F5EDD5;
+    --accent:#C04A3B;
+    --accent-bg:#F6DEDA;
+    --success:#2D5016;
+    --success-bg:#E8F2DE;
+    --paper:#F9FAFA;
+    --card:#FFFFFF;
+    --ink:#1C1C1C;
+    --ink-soft:#5A5A5A;
+    --line:#E5E5E5;
+    --shadow:0 1px 0 rgba(28,28,28,.04), 0 10px 30px -20px rgba(28,28,28,.4);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    line-height:1.6;
+    letter-spacing:-.01em;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 20px 80px;}
+
+  .header{text-align:center;margin-bottom:40px;padding-bottom:30px;border-bottom:2px solid var(--line);}
+  .back-link{display:inline-block;margin-bottom:16px;color:var(--primary);text-decoration:none;font-size:13px;font-weight:700;}
+  .back-link:hover{text-decoration:underline;}
+  h1{font-size:32px;line-height:1.3;font-weight:900;margin:0 0 12px;letter-spacing:-.03em;}
+  .subtitle{font-size:15px;color:var(--ink-soft);max-width:700px;margin:0 auto;line-height:1.55;}
+
+  .section{margin-bottom:48px;}
+  .section-title{font-size:22px;font-weight:900;margin:0 0 24px;letter-spacing:-.02em;}
+  .section-title::before{content:'';display:inline-block;width:4px;height:24px;background:var(--primary);
+    margin-right:10px;border-radius:2px;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow);}
+  .card h3{font-size:18px;font-weight:800;margin:0 0 12px;}
+  .card p{font-size:14px;color:var(--ink-soft);margin:0 0 16px;line-height:1.6;}
+
+  .status-box{background:var(--success-bg);border:2px solid var(--success);border-radius:14px;padding:20px;margin-bottom:24px;}
+  .status-box .status-label{font-size:12px;font-weight:800;color:var(--success);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;}
+  .status-box .status-value{font-size:18px;font-weight:900;color:var(--success);margin-bottom:8px;}
+  .status-box .status-desc{font-size:13px;color:var(--ink-soft);}
+
+  .setup-checklist{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;}
+  .checklist-item{display:flex;align-items:flex-start;gap:12px;margin:14px 0;font-size:14px;}
+  .checklist-check{flex:0 0 20px;width:20px;height:20px;border:2px solid var(--line);border-radius:4px;
+    display:flex;align-items:center;justify-content:center;font-weight:800;margin-top:2px;}
+  .checklist-item.done .checklist-check{background:var(--primary);border-color:var(--primary);color:#fff;}
+  .checklist-item.done{color:var(--ink-soft);}
+  .checklist-item.pending .checklist-check{border-color:var(--secondary);background:var(--secondary-bg);}
+  .checklist-content{flex:1;}
+  .checklist-content strong{color:var(--ink);}
+  .checklist-desc{font-size:12px;color:var(--ink-soft);margin-top:4px;}
+
+  .schedule-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  .schedule-table th{background:var(--primary-bg);padding:12px;text-align:left;font-weight:800;color:var(--primary);border-bottom:2px solid var(--line);}
+  .schedule-table td{padding:12px;border-bottom:1px solid var(--line);}
+  .schedule-table tr:hover{background:rgba(45,80,22,.03);}
+  .day-badge{display:inline-block;background:var(--primary-bg);color:var(--primary);padding:4px 10px;
+    border-radius:6px;font-weight:700;font-size:12px;}
+
+  .btn{display:inline-block;background:var(--primary);color:#fff;padding:11px 16px;border-radius:10px;
+    text-decoration:none;font-size:13.5px;font-weight:800;border:none;cursor:pointer;transition:background .2s;}
+  .btn:hover{background:var(--primary-light);}
+  .btn-secondary{background:var(--secondary);}.btn-secondary:hover{background:#9d6f0a;}
+  .btn-block{width:100%;text-align:center;display:block;margin-top:16px;}
+
+  .note-box{background:var(--primary-bg);border:1px solid var(--primary);border-radius:14px;padding:16px;
+    margin:20px 0;font-size:13px;line-height:1.6;}
+  .note-box b{color:var(--primary);}
+
+  .platform-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px;}
+  .platform-badge{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;
+    text-align:center;font-size:13px;font-weight:700;color:var(--ink);}
+  .platform-badge.active{background:var(--success-bg);border-color:var(--success);color:var(--success);}
+  .platform-badge.prep{background:var(--secondary-bg);border-color:var(--secondary);color:var(--secondary);}
+
+  .code-block{background:#F3F4F6;border:1px solid var(--line);border-radius:10px;padding:14px;
+    font-family:'Monaco','Courier New',monospace;font-size:12px;color:var(--ink);overflow-x:auto;line-height:1.5;}
+
+  .footer{border-top:1px solid var(--line);padding-top:30px;margin-top:40px;text-align:center;font-size:12px;color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- header -->
+  <div class="header">
+    <a href="index.html" class="back-link">← 메인으로</a>
+    <h1>📱 SNS 자동화 홍보</h1>
+    <p class="subtitle">Threads에 매일 자동으로 영농사업화 콘텐츠를 포스팅하고, 댓글에 자동으로 응답하는 시스템</p>
+  </div>
+
+  <!-- current status -->
+  <div class="section">
+    <div class="section-title">현재 상태</div>
+    <div class="status-box">
+      <div class="status-label">✅ 시스템 상태</div>
+      <div class="status-value">준비 완료</div>
+      <div class="status-desc">GitHub Actions + sns_bot.py + Threads API 통합 완료. GitHub Secrets 등록 후 자동 포스팅 시작.</div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:24px;">
+      <h3 style="margin:0 0 16px;font-size:16px;font-weight:800;">📅 다음 포스팅</h3>
+      <table style="width:100%;font-size:13.5px;">
+        <tr>
+          <td style="padding:8px 0;color:var(--ink-soft);">현재 시간 (KST):</td>
+          <td id="current-time" style="padding:8px 0;font-weight:700;">계산 중...</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0;color:var(--ink-soft);">다음 포스팅:</td>
+          <td id="next-post" style="padding:8px 0;font-weight:700;">계산 중...</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0;color:var(--ink-soft);">주제:</td>
+          <td id="next-topic" style="padding:8px 0;font-weight:700;">계산 중...</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0;color:var(--ink-soft);">시간까지:</td>
+          <td id="time-left" style="padding:8px 0;font-weight:700;">계산 중...</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- setup guide -->
+  <div class="section">
+    <div class="section-title">🛠️ 설정 완료 체크리스트</div>
+    <div class="setup-checklist">
+      <div class="checklist-item done">
+        <div class="checklist-check">✓</div>
+        <div class="checklist-content">
+          <strong>GitHub 리포지토리 생성</strong>
+          <div class="checklist-desc">https://github.com/kimdo750-ui/Taehwan</div>
+        </div>
+      </div>
+
+      <div class="checklist-item done">
+        <div class="checklist-check">✓</div>
+        <div class="checklist-content">
+          <strong>sns-automation/ 폴더 업로드</strong>
+          <div class="checklist-desc">config.json, sns_bot.py, .github/workflows/ 포함</div>
+        </div>
+      </div>
+
+      <div class="checklist-item pending">
+        <div class="checklist-check">!</div>
+        <div class="checklist-content">
+          <strong>GitHub Secrets 등록 (필수)</strong>
+          <div class="checklist-desc">Settings → Secrets and variables → Actions에서 다음 추가:</div>
+          <div style="margin-top:8px;background:var(--paper);padding:10px;border-radius:6px;font-family:monospace;font-size:12px;">
+            THREADS_USER_ID<br>
+            THREADS_ACCESS_TOKEN<br>
+            HANALL_LINK<br>
+            PLATFORM_LINK
+          </div>
+        </div>
+      </div>
+
+      <div class="checklist-item pending">
+        <div class="checklist-check">!</div>
+        <div class="checklist-content">
+          <strong>GitHub Actions 워크플로우 활성화</strong>
+          <div class="checklist-desc">Actions 탭 → sns-daily-post.yml 워크플로우 확인</div>
+        </div>
+      </div>
+
+      <div class="checklist-item pending">
+        <div class="checklist-check">!</div>
+        <div class="checklist-content">
+          <strong>첫 포스팅 확인</strong>
+          <div class="checklist-desc">내일 20:30 KST 또는 수동 실행으로 "Run workflow" 클릭</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <b>💡 Tip:</b> GitHub Secrets 등록 후 GitHub Actions는 자동으로 매일 20:30 KST에 실행됩니다. 수동으로 테스트하려면 Actions 탭에서 "Run workflow" 클릭하세요.
+    </div>
+  </div>
+
+  <!-- posting schedule -->
+  <div class="section">
+    <div class="section-title">📋 포스팅 일정</div>
+    <p style="font-size:14px;color:var(--ink-soft);margin-bottom:16px;">매주 요일별로 다른 주제를 자동 포스팅합니다. (매일 20:30 KST)</p>
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>요일</th>
+          <th>주제</th>
+          <th>내용</th>
+          <th>포스팅 시간</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="day-badge">월</span></td>
+          <td>영농형태 진단</td>
+          <td>당신의 영농 성향 파악하기</td>
+          <td>매주 월 20:30</td>
+        </tr>
+        <tr>
+          <td><span class="day-badge">화</span></td>
+          <td>KREI 데이터</td>
+          <td>내년 농산물 시장 예측</td>
+          <td>매주 화 20:30</td>
+        </tr>
+        <tr>
+          <td><span class="day-badge">수</span></td>
+          <td>투입비용 계산</td>
+          <td>초기 자금 규모 결정하기</td>
+          <td>매주 수 20:30</td>
+        </tr>
+        <tr>
+          <td><span class="day-badge">목</span></td>
+          <td>수익 시뮬레이션</td>
+          <td>월별·연간 현금흐름 예측</td>
+          <td>매주 목 20:30</td>
+        </tr>
+        <tr>
+          <td><span class="day-badge">금</span></td>
+          <td>사업계획서</td>
+          <td>금융기관 제출용 문서 생성</td>
+          <td>매주 금 20:30</td>
+        </tr>
+        <tr>
+          <td><span class="day-badge">토</span></td>
+          <td>정부 지원금</td>
+          <td>청년농업인 지원 안내</td>
+          <td>매주 토 20:30</td>
+        </tr>
+        <tr>
+          <td><span class="day-badge">일</span></td>
+          <td>위험 관리</td>
+          <td>사전 대비 체크리스트</td>
+          <td>매주 일 20:30</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- platforms -->
+  <div class="section">
+    <div class="section-title">🌐 플랫폼 현황</div>
+    <p style="font-size:14px;color:var(--ink-soft);margin-bottom:16px;">현재 Threads만 활성화되어 있습니다. 향후 다른 플랫폼도 추가될 예정입니다.</p>
+    <div class="platform-grid">
+      <div class="platform-badge active">
+        ✓ Threads<br><span style="font-size:11px;font-weight:400;margin-top:4px;display:block;">활성화</span>
+      </div>
+      <div class="platform-badge prep">
+        🔄 Instagram<br><span style="font-size:11px;font-weight:400;margin-top:4px;display:block;">준비중</span>
+      </div>
+      <div class="platform-badge prep">
+        🔄 Twitter/X<br><span style="font-size:11px;font-weight:400;margin-top:4px;display:block;">준비중</span>
+      </div>
+      <div class="platform-badge prep">
+        🔄 Telegram<br><span style="font-size:11px;font-weight:400;margin-top:4px;display:block;">준비중</span>
+      </div>
+      <div class="platform-badge prep">
+        🔄 Naver Blog<br><span style="font-size:11px;font-weight:400;margin-top:4px;display:block;">준비중</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- threads setup -->
+  <div class="section">
+    <div class="section-title">Threads 연동 상세 가이드</div>
+
+    <div class="card">
+      <h3>Step 1: Threads API 토큰 획득</h3>
+      <p>Threads는 아직 공식 API가 완전히 개방되지 않았습니다. 다음 중 하나 선택:</p>
+      <ol style="font-size:14px;color:var(--ink-soft);line-height:1.8;">
+        <li><strong>Meta for Developers 등록:</strong> https://developers.facebook.com → 앱 생성 → Threads API 신청</li>
+        <li><strong>Instagram API 활용:</strong> Instagram 비즈니스 계정 필요 (Threads 계정과 연동)</li>
+        <li><strong>수동 포스팅:</strong> sns_bot.py에서 자동 생성된 포스트 링크를 사용해 수동 포스팅</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>Step 2: GitHub Secrets 등록</h3>
+      <p>다음 정보를 GitHub 리포지토리에 저장:</p>
+      <div class="code-block">
+THREADS_USER_ID = 당신의 Threads 사용자 ID<br>
+THREADS_ACCESS_TOKEN = Meta API 토큰 (60일 유효)<br>
+HANALL_LINK = 홍보할 링크 (예: https://taehwan.vercel.app)<br>
+PLATFORM_LINK = 플랫폼 링크
+      </div>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:12px;">등록 위치: Settings → Secrets and variables → Actions → New repository secret</p>
+    </div>
+
+    <div class="card">
+      <h3>Step 3: 자동 포스팅 확인</h3>
+      <p>GitHub Actions 탭에서 다음 워크플로우 확인:</p>
+      <ul style="font-size:14px;color:var(--ink-soft);line-height:1.8;margin:12px 0;">
+        <li><strong>sns-daily-post.yml:</strong> 매일 20:30 KST 자동 실행</li>
+        <li><strong>threads-reply.yml:</strong> 3시간마다 '✓' 댓글 자동 응답</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- customization -->
+  <div class="section">
+    <div class="section-title">⚙️ 콘텐츠 커스터마이징</div>
+
+    <div class="card">
+      <h3>포스팅 내용 수정</h3>
+      <p>파일: <code style="background:var(--paper);padding:4px 8px;border-radius:4px;">sns-automation/sns_bot.py</code></p>
+      <p style="color:var(--ink-soft);margin-bottom:12px;">CONTENT_TEMPLATES에서 요일별 콘텐츠 수정:</p>
+      <div class="code-block">
+CONTENT_TEMPLATES = {<br>
+&nbsp;&nbsp;"monday": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"title": "영농형태 진단",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"text": "원하는 텍스트 입력",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"link": "{LINK}"<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;# 나머지 요일도 동일하게...<br>
+}
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>포스팅 시간 변경</h3>
+      <p>파일: <code style="background:var(--paper);padding:4px 8px;border-radius:4px;">.github/workflows/sns-daily-post.yml</code></p>
+      <p style="color:var(--ink-soft);margin-bottom:12px;">cron 설정 (UTC 기준, KST = UTC+9):</p>
+      <div class="code-block">
+schedule:<br>
+&nbsp;&nbsp;- cron: "30 11 * * *"  # 현재: 매일 20:30 KST<br>
+<br>
+# 다른 시간 예시:<br>
+# 19:00 KST = "0 10 * * *"<br>
+# 21:00 KST = "0 12 * * *"
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>해시태그 수정</h3>
+      <p>파일: <code style="background:var(--paper);padding:4px 8px;border-radius:4px;">sns-automation/config.json</code></p>
+      <p style="color:var(--ink-soft);margin-bottom:12px;">content_strategy.hashtags에서 수정</p>
+    </div>
+  </div>
+
+  <!-- monitoring -->
+  <div class="section">
+    <div class="section-title">📊 포스팅 모니터링</div>
+
+    <div class="card">
+      <h3>GitHub Actions 로그 확인</h3>
+      <ol style="font-size:14px;color:var(--ink-soft);line-height:1.8;">
+        <li>GitHub 리포지토리 → <strong>Actions</strong> 탭</li>
+        <li><strong>sns-daily-post</strong> 워크플로우 선택</li>
+        <li>최근 실행 기록 확인</li>
+        <li>오류 발생 시 로그에서 상세 내용 확인</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>포스팅 기록</h3>
+      <p>파일: <code style="background:var(--paper);padding:4px 8px;border-radius:4px;">sns-automation/state/posting_history.json</code></p>
+      <p style="color:var(--ink-soft);margin-top:12px;">자동으로 기록되는 포스팅 내역: 날짜, 주제, 플랫폼, 상태</p>
+    </div>
+
+    <div class="card">
+      <h3>분석 리포트</h3>
+      <p>파일: <code style="background:var(--paper);padding:4px 8px;border-radius:4px;">sns-automation/state/analytics.json</code></p>
+      <p style="color:var(--ink-soft);margin-top:12px;">주요 지표: 누적 포스팅 수, 조회수, 상호작용, 클릭률</p>
+    </div>
+  </div>
+
+  <!-- troubleshooting -->
+  <div class="section">
+    <div class="section-title">🔧 문제 해결</div>
+
+    <div class="card">
+      <h3>❌ "Secrets not found" 에러</h3>
+      <p style="color:var(--ink-soft);margin-bottom:12px;">원인: GitHub Secrets 미등록</p>
+      <p style="margin:0;"><strong>해결:</strong></p>
+      <ol style="font-size:14px;color:var(--ink-soft);line-height:1.8;">
+        <li>Settings → Secrets and variables → Actions</li>
+        <li>다음 4개 secret 추가:
+          <ul style="margin-top:6px;">
+            <li>THREADS_USER_ID</li>
+            <li>THREADS_ACCESS_TOKEN</li>
+            <li>HANALL_LINK</li>
+            <li>PLATFORM_LINK</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>❌ "Token expired" 에러</h3>
+      <p style="color:var(--ink-soft);margin-bottom:12px;">원인: Threads API 토큰 만료 (60일)</p>
+      <p style="margin:0;"><strong>해결:</strong></p>
+      <ol style="font-size:14px;color:var(--ink-soft);line-height:1.8;">
+        <li>Meta for Developers에서 새 토큰 생성</li>
+        <li>GitHub Secrets의 THREADS_ACCESS_TOKEN 업데이트</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>❌ "Workflow not triggered" 에러</h3>
+      <p style="color:var(--ink-soft);margin-bottom:12px;">원인: 워크플로우 비활성화 또는 시간 설정 오류</p>
+      <p style="margin:0;"><strong>해결:</strong></p>
+      <ol style="font-size:14px;color:var(--ink-soft);line-height:1.8;">
+        <li>Actions 탭에서 "I understand my workflows and want to enable them" 클릭</li>
+        <li>.github/workflows/sns-daily-post.yml의 cron 시간 확인 (UTC 기준)</li>
+        <li>수동으로 "Run workflow" 클릭해서 테스트</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>❌ "Posting failed" 에러</h3>
+      <p style="color:var(--ink-soft);margin-bottom:12px;">원인: Threads API 연결 실패</p>
+      <p style="margin:0;"><strong>해결:</strong></p>
+      <ol style="font-size:14px;color:var(--ink-soft);line-height:1.8;">
+        <li>Threads API 인증정보 재확인</li>
+        <li>Threads 계정이 비즈니스 계정인지 확인</li>
+        <li>API 권한 설정 확인 (Instagram Graph API)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- resources -->
+  <div class="section">
+    <div class="section-title">📚 참고 자료</div>
+
+    <div class="card">
+      <h3>GitHub & 배포</h3>
+      <ul style="font-size:14px;color:var(--ink-soft);line-height:1.8;margin:12px 0;">
+        <li><a href="https://github.com/kimdo750-ui/Taehwan" target="_blank" style="color:var(--secondary);text-decoration:none;font-weight:700;">영농사업화 GitHub 리포지토리</a></li>
+        <li><a href="https://docs.github.com/actions" target="_blank" style="color:var(--secondary);text-decoration:none;font-weight:700;">GitHub Actions 공식 문서</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>API & 개발자 가이드</h3>
+      <ul style="font-size:14px;color:var(--ink-soft);line-height:1.8;margin:12px 0;">
+        <li><a href="https://developers.facebook.com" target="_blank" style="color:var(--secondary);text-decoration:none;font-weight:700;">Meta for Developers</a> - Threads API 신청</li>
+        <li><a href="https://www.instagram.com/developer" target="_blank" style="color:var(--secondary);text-decoration:none;font-weight:700;">Instagram Graph API</a> - Threads 연동</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="footer">
+    <p>📌 SNS 자동화는 영농사업화 플랫폼의 선택 기능입니다. GitHub Secrets 등록 후에 자동으로 시작됩니다.</p>
+    <p style="margin-top:12px;"><a href="SNS_AUTOMATION_GUIDE.md" style="color:var(--secondary);text-decoration:none;font-weight:700;">더 자세한 가이드 보기</a></p>
+    <p style="margin-top:12px;font-size:11px;">개발: Claude Code | 한농대 영농사업화 프로젝트</p>
+  </div>
+
+</div>
+
+<script>
+// 다음 포스팅 시간 계산
+function updatePostingInfo() {
+  const now = new Date();
+  const targetTime = new Date();
+  targetTime.setHours(20, 30, 0, 0);
+
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  const topics = ['위험 관리', '영농형태 진단', 'KREI 데이터', '투입비용 계산', '수익 시뮬레이션', '사업계획서', '정부 지원금'];
+
+  // 현재 시간 표시
+  document.getElementById('current-time').textContent =
+    `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+  // 다음 포스팅 계산
+  if (now >= targetTime) {
+    targetTime.setDate(targetTime.getDate() + 1);
+  }
+
+  const dayName = days[targetTime.getDay()];
+  const topicIdx = (targetTime.getDay() - 1 + 7) % 7;
+  const topic = topics[topicIdx];
+
+  document.getElementById('next-post').textContent =
+    `${targetTime.getFullYear()}-${(targetTime.getMonth() + 1).toString().padStart(2, '0')}-${targetTime.getDate().toString().padStart(2, '0')} 20:30`;
+  document.getElementById('next-topic').textContent = `${dayName} · ${topic}`;
+
+  // 남은 시간 계산
+  const diff = targetTime - now;
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  document.getElementById('time-left').textContent = `${hours}시간 ${mins}분`;
+}
+
+updatePostingInfo();
+setInterval(updatePostingInfo, 60000); // 1분마다 업데이트
+</script>
+</body>
+</html>
