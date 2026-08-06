@@ -164,18 +164,24 @@
   <!-- 10. 장애 상황 -->
   <h2 class="sec">10. 장애 및 위험상황 관리 계획</h2>
   <p class="tip">💡 현실적인 위험만 기재. 추상적이 아닌 구체적 대응책(교육·보험·다각화). 기술센터, 보험사와 미리 상담.</p>
-  <h3 class="sub">내부 장애 원인 → 대응방법</h3>
+
+  <h3 class="sub">10-1. 내부 장애 원인 → 대응방법</h3>
   <div class="tw"><table class="narrow"><thead><tr><th style="width:45%">내부 장애 원인</th><th>대응방법</th></tr></thead>
     <tbody><tr><td><input class="ta" style="text-align:left" placeholder="예: 초기 기술 부족"></td><td><input class="ta" style="text-align:left" placeholder="기술센터 교육(월 2회) + 선배농 멘토링"></td></tr>
     <tr><td><input class="ta" style="text-align:left" placeholder="예: 시장 진입 지연"></td><td><input class="ta" style="text-align:left" placeholder="1년차 하반기 소량 판매로 시장 반응 검토"></td></tr></tbody></table></div>
 
-  <h3 class="sub">외부 위험상황 → 대응방법</h3>
+  <h3 class="sub">10-2. 외부 위험상황 → 대응방법</h3>
   <div class="tw"><table class="narrow"><thead><tr><th style="width:45%">외부 위험상황</th><th>대응방법</th></tr></thead>
     <tbody><tr><td><input class="ta" style="text-align:left" placeholder="예: 병충해 발생(탄저병)"></td><td><input class="ta" style="text-align:left" placeholder="예방 약제 선제 분무 + IPM 교육"></td></tr>
     <tr><td><input class="ta" style="text-align:left" placeholder="예: 수입 딸기 경쟁"></td><td><input class="ta" style="text-align:left" placeholder="프리미엄화(유기농) + 직거래 강화"></td></tr></tbody></table></div>
 
+  <h3 class="sub">10-3. 정책 의무 준수 위험 확인</h3>
+  <p class="tip">💡 정부 지원사업의 의무사항(교육, 보험, 기록, 신고 등) 미이행 시 지원금 반환·제재 발생. <br>
+  👉 <strong><a href="../support/risk-checklist.html" target="_blank" style="color:#3D7A34;text-decoration:none;">위험관리 체크리스트 (별도 도구)</a></strong>에서 자세히 점검하세요.</p>
+
   <!-- 11. 교육훈련 -->
   <h2 class="sec">11. 교육훈련 계획</h2>
+  <p class="tip">💡 <strong>※ 의무사항:</strong> 1년차 최소 28시간 교육 이수 필수 (기술센터, 전문교육기관). 미이행 시 지원금 환수 가능.</p>
   <p class="tip">💡 연차별 구체적 과정명 기재. 기술센터(월 1~2회, 무료) + 자격증 과정(연 1~2개) + 선배농 현장실습. 자격증 비용 약 30만원/개.</p>
   <div class="tw"><table id="t-edu"></table></div>
 
@@ -247,6 +253,7 @@
 3) 프리미엄 판로(직거래·온라인) 중심
 4) 3년차부터 단계적 시설 투자
 5) 4년차부터 다각화로 경영 안정성 제고" style="min-height:250px"></textarea>
+
 </div>
 
 <script>
@@ -302,6 +309,7 @@ $('t-promo').innerHTML=pctTable(['SNS 활용','전시회 참가','방송·매체
 let eduB='<thead><tr><th>영역</th><th>1년차</th><th>2년차</th><th>3년차</th></tr></thead><tbody>';
 ['교육내용','이행방법'].forEach(r=>{ eduB+='<tr><td class="h">'+r+'</td><td><input style="text-align:left"></td><td><input style="text-align:left"></td><td><input style="text-align:left"></td></tr>'; });
 $('t-edu').innerHTML=eduB+'</tbody>';
+
 
 // live calcs: fund sums + pct sums
 function num(el){ const v=parseFloat(el.value); return isNaN(v)?0:v; }
