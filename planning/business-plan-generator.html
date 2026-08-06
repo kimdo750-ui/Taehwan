@@ -75,92 +75,178 @@
 
   <!-- 신청인 -->
   <h2 class="sec">신청인</h2>
-  <div class="field"><label>성명</label><input class="line" id="name"><label>영농시작일</label><input class="line" id="birth"></div>
-  <div class="field"><label>주소</label><input class="line" id="addr"></div>
-  <div class="field"><label>연락처</label><input class="line" id="tel"><label>영농경력</label><input class="line" id="career" placeholder="예: 영농(영농업)"></div>
-  <div class="field"><label>영농의 유형</label><input class="line" id="etype" placeholder="독립경영(독립창업) / 농사 등"></div>
+  <p class="tip">💡 영농시작일은 실제 영농을 개시하는 날 (거주지 이사일 아님). 미정이면 예정일 기재. 영농경력이 없으면 "계약재배", "인턴", "부모 농장 보조" 등 관련 경험 기재.</p>
+  <div class="field"><label>성명</label><input class="line" id="name"><label>영농시작일</label><input class="line" id="birth" placeholder="예: 2024년 6월 1일"></div>
+  <div class="field"><label>주소</label><input class="line" id="addr" placeholder="영농할 지역 주소"></div>
+  <div class="field"><label>연락처</label><input class="line" id="tel"><label>영농경력</label><input class="line" id="career" placeholder="없음 / 1년 / 계약재배 2년 등"></div>
+  <div class="field"><label>영농의 유형</label><input class="line" id="etype" placeholder="독립경영(청년창업) 또는 공동경영"></div>
 
   <!-- 1. 일반현황 -->
   <h2 class="sec">1. 일반현황</h2>
+  <p class="tip">💡 영농 유형은 주요 작물을 기준으로 작성. 다각화는 3년차 이후부터 추진 권장. 1년차는 1~2개 작물 집중.</p>
   <h3 class="sub">1-1. 영농 유형</h3>
   <div class="tw"><table id="t-type"></table></div>
+  <p class="tip" style="margin:8px 0 0;">💡 주요/부 구분은 예상 판매액 비중으로 판단 (주: 70% 이상, 부: 30% 이하). 부품목 예시: 양계, 꿀벌, 산림사업 등</p>
+
   <h3 class="sub">1-2. 농업경영 구성원 (본인 제외)</h3>
   <div class="tw"><table id="t-member"></table></div>
+  <p class="tip" style="margin:8px 0 0;">💡 가족 = 배우자, 성인 자녀만 (부모 제외). 초기에는 계절 일용 중심으로 시작 → 점진적 고용 확대 권장.</p>
 
   <!-- 2. 농지 규모 -->
   <h2 class="sec">2. 농지 규모 <span style="font-size:10px;color:var(--soft)">(단위: ㎡)</span></h2>
+  <p class="tip">💡 1,000㎡ = 약 300평 ≈ 100마지기. 1년차는 임차로 시작 (구매는 3년차 이후 여유자금 생기면). 딸기는 8,000~10,000㎡ 기준.</p>
   <div class="tw"><table id="t-land"></table></div>
+  <p class="tip" style="margin:8px 0 0;">💡 "현재"란은 보유한 확정지만 기재. 아직 없으면 공란. "향후"는 확보 예정지 기재.</p>
 
   <!-- 3. 소유지 -->
   <h2 class="sec">3. 농지 소유지</h2>
+  <p class="tip">💡 리·법·지번까지 정확히 기재. 현재 미정이면 공란, 향후만 입력 OK. 임차는 반드시 임차계약서(1년 이상, 인감도장) 필요.</p>
   <h3 class="sub">1) 매입 </h3>
   <div class="tw"><table id="t-own" class="narrow"></table></div>
+  <p class="tip" style="margin:8px 0 0;">💡 3년차 이후 구매 계획이 있으면 입력. 대출은 토지은행(2억원, 10년) 기준.</p>
+
   <h3 class="sub">2) 임차</h3>
   <div class="tw"><table id="t-rent" class="narrow"></table></div>
-  <p class="tip">※ 현재는 리·법·지법까지, 향후 포함지는 리·법까지 기재</p>
+  <p class="tip" style="margin:8px 0 0;">💡 임차료 기준(서울근교): 3~4만원/10a/년. 계약서 반드시 준비. 지주 정보(성명, 주소) 사전 확보.</p>
 
   <!-- 4. 시설 -->
   <h2 class="sec">4. 농업물 사육시설 <span style="font-size:10px;color:var(--soft)">(단위: ㎡, 경종기준 / 추산시 별도 표기)</span></h2>
+  <p class="tip">💡 정리시설 = 저장고·냉장고. 비닐시설 = 하우스(딸기·채소용). 가공시설 = 선별실, 포장실. 1년차는 모두 임차/리스 권장.</p>
   <div class="tw"><table id="t-fac"></table></div>
+  <p class="tip" style="margin:8px 0 0;">💡 시설 확장은 3년차부터 단계적으로. 초기 자본효율성 극대화 중심.</p>
 
   <!-- 5. 농기계 -->
   <h2 class="sec">5. 농기계 (보유 및 향보계획)</h2>
+  <p class="tip">💡 트랙터 = 경운·이랑 만들 때. 딸기는 소형 관리기 충분. 자동화 기계(자동급수, 선별기)는 3년차부터. 구체적 모델명·비용 기재 권장.</p>
   <div class="tw"><table id="t-equip"></table></div>
+  <p class="tip" style="margin:8px 0 0;">💡 예시: 소형관리기(200만원), 점적시설·비닐(400만원), 냉장고(600만원) 등</p>
 
   <!-- 6. 자금조달 -->
   <h2 class="sec">6. 자금조달 계획 <span style="font-size:10px;color:var(--soft)">(단위: 만원)</span></h2>
+  <p class="tip">💡 자기자금 = 본인 저축 + 부모 증여(증여증명 필수). 정책자금 = 청년농업인 대출(금리 1~2%, 거치 2년). 농지: 토지은행 최대 2억원/10년. 시설: 초록보험 최대 5천만원/3년.</p>
   <div class="tw"><table id="t-fund" class="narrow"></table></div>
+  <p class="tip" style="margin:8px 0 0;">💡 이자비용 = 5년 동안 예상 이자 (정책자금 기준). 정책자금 신청은 기술센터 추천장 필요.</p>
 
   <!-- 7. 역량 -->
   <h2 class="sec">7. 농업경영 역량</h2>
+  <p class="tip">💡 한농대 졸업자는 반드시 학교 교육 기재. 전공과목은 5개 정도 대표 과목만. 현재 영농 전이면 "계획 중" 표시 가능.</p>
   <h3 class="sub">1) 학교 교육</h3>
   <div class="tw"><table class="narrow"><thead><tr><th>학교명/학과</th><th>재학기간</th><th>관련 전공과목</th><th>이수시간·학점</th></tr></thead>
-    <tbody><tr><td><input id="sch_name" style="text-align:left"></td><td><input id="sch_term"></td><td><input id="sch_major"></td><td><input id="sch_hr"></td></tr></tbody></table></div>
-  <p class="tip">※ 고등학교 졸업(중학교) 이상이면 반드시 기재 → 개인역량 항공교육 맨 밑 항목</p>
+    <tbody><tr><td><input id="sch_name" style="text-align:left" placeholder="한국농수산대학 / 딸기재배학과"><td><input id="sch_term" placeholder="2021.3 ~ 2023.2"></td><td><input id="sch_major" placeholder="딸기재배학, 시설원예학, 병충해방제 등"></td><td><input id="sch_hr" placeholder="560시간 / 37학점"></td></tr></tbody></table></div>
   <h3 class="sub">2) 사이 교육</h3>
   <div class="tw"><table class="narrow"><thead><tr><th>교육기관</th><th>교육과정명</th><th>기간</th><th>시간</th></tr></thead>
     <tbody id="soc-body"></tbody></table></div>
+  <p class="tip" style="margin:8px 0 0;">💡 기술센터 교육은 무료. 연간 2~3회 이상 권장. 자격증 연계 교육(농산물품질관리, 유기농) 우대.</p>
+
   <h3 class="sub">4) 자격증 및 인증</h3>
   <div class="tw"><table class="narrow"><thead><tr><th>자격증·인증명</th><th>번호</th><th>발행기관</th></tr></thead>
     <tbody id="cert-body"></tbody></table></div>
-  <h3 class="sub">5) 경영관리 현황 <span style="font-size:10px;color:var(--soft)">(독립경영 외에는 작성 제외)</span></h3>
+  <p class="tip" style="margin:8px 0 0;">💡 농산물품질관리사 = 가장 기본(1주 교육 + 시험). 유기농/GAP = 프리미엄 판매 시 필수. 이미 취득한 것 + 향후 계획 함께 기재.</p>
+
+  <h3 class="sub">5) 경영관리 현황 <span style="font-size:10px;color:var(--soft)">(독립경영만 필수)</span></h3>
   <div id="mgmt-box"></div>
+  <p class="tip" style="margin:8px 0 0;">💡 아직 영농 전이면 "계획하고 있음" 표시. 영농 시작 후 3개월 내 모두 갖춰야 함.</p>
 
   <!-- 8. 판매·마케팅 -->
   <h2 class="sec">8. 판매·마케팅 계획 <span style="font-size:10px;color:var(--soft)">(비중 %)</span></h2>
+  <p class="tip">💡 합계는 반드시 100% (또는 95~100%). 현재 미정 = 공란 OK, 향후만 입력. 딸기는 고급 판로 중심 추천(도매는 최소).</p>
   <div class="tw"><table id="t-sell" class="narrow"></table></div>
   <div class="pctwarn" id="sellwarn"></div>
   <h3 class="sub">판매·마케팅 전략</h3>
-  <textarea class="free" id="mktstrat" placeholder="스토리텔링·브랜딩·SNS·온라인도구 등 구체적 전략"></textarea>
+  <textarea class="free" id="mktstrat" placeholder="예) 스토리텔링(팜투테이블 SNS), 온라인(쿠팡·마켓컬리), 오프라인(직거래·카페), 프리미엄화(친환경·선물세트) 등 구체적 액션플랜"></textarea>
 
   <!-- 9. 홍보 -->
   <h2 class="sec">9. 홍보 계획 <span style="font-size:10px;color:var(--soft)">(비중 %)</span></h2>
+  <p class="tip">💡 합계 100%. SNS = 인스타·유튜브 (농사일상). 전시회 = 박람회·축제 참가. 방송 = 로컬뉴스·라디오.</p>
   <div class="tw"><table id="t-promo" class="narrow"></table></div>
   <div class="pctwarn" id="promowarn"></div>
 
   <!-- 10. 장애 상황 -->
   <h2 class="sec">10. 장애 및 위험상황 관리 계획</h2>
+  <p class="tip">💡 현실적인 위험만 기재. 추상적이 아닌 구체적 대응책(교육·보험·다각화). 기술센터, 보험사와 미리 상담.</p>
   <h3 class="sub">내부 장애 원인 → 대응방법</h3>
   <div class="tw"><table class="narrow"><thead><tr><th style="width:45%">내부 장애 원인</th><th>대응방법</th></tr></thead>
-    <tbody><tr><td><input class="ta" style="text-align:left"></td><td><input class="ta" style="text-align:left"></td></tr>
-    <tr><td><input class="ta" style="text-align:left"></td><td><input class="ta" style="text-align:left"></td></tr></tbody></table></div>
+    <tbody><tr><td><input class="ta" style="text-align:left" placeholder="예: 초기 기술 부족"></td><td><input class="ta" style="text-align:left" placeholder="기술센터 교육(월 2회) + 선배농 멘토링"></td></tr>
+    <tr><td><input class="ta" style="text-align:left" placeholder="예: 시장 진입 지연"></td><td><input class="ta" style="text-align:left" placeholder="1년차 하반기 소량 판매로 시장 반응 검토"></td></tr></tbody></table></div>
+
   <h3 class="sub">외부 위험상황 → 대응방법</h3>
   <div class="tw"><table class="narrow"><thead><tr><th style="width:45%">외부 위험상황</th><th>대응방법</th></tr></thead>
-    <tbody><tr><td><input class="ta" style="text-align:left"></td><td><input class="ta" style="text-align:left"></td></tr>
-    <tr><td><input class="ta" style="text-align:left"></td><td><input class="ta" style="text-align:left"></td></tr></tbody></table></div>
+    <tbody><tr><td><input class="ta" style="text-align:left" placeholder="예: 병충해 발생(탄저병)"></td><td><input class="ta" style="text-align:left" placeholder="예방 약제 선제 분무 + IPM 교육"></td></tr>
+    <tr><td><input class="ta" style="text-align:left" placeholder="예: 수입 딸기 경쟁"></td><td><input class="ta" style="text-align:left" placeholder="프리미엄화(유기농) + 직거래 강화"></td></tr></tbody></table></div>
 
   <!-- 11. 교육훈련 -->
   <h2 class="sec">11. 교육훈련 계획</h2>
+  <p class="tip">💡 연차별 구체적 과정명 기재. 기술센터(월 1~2회, 무료) + 자격증 과정(연 1~2개) + 선배농 현장실습. 자격증 비용 약 30만원/개.</p>
   <div class="tw"><table id="t-edu"></table></div>
 
   <!-- 12. 영농동기 -->
-  <h2 class="sec">12. 영농 동기 및 경영계획 <span style="font-size:10px;color:var(--soft)">(3페이지 이내)</span></h2>
+  <h2 class="sec">12. 영농 동기 및 경영계획 <span style="font-size:10px;color:var(--soft)">(최대 3쪽, A4 기준)</span></h2>
+  <p class="tip">⭐ <strong>가장 중요한 섹션!</strong> 스토리텔링으로 작성. 왜 이 작물인가 + 현재 준비 상황 + 5년 구체적 로드맵. 추상적이 아닌 구체적 수치(생산량, 매출, 순이익) 제시.</p>
+
   <h3 class="sub">영농 동기</h3>
-  <textarea class="free" id="motive" placeholder="영농 동기, 목표시장, 지역 공동체와 함께 성장하기 위한 노력·계획"></textarea>
-  <h3 class="sub">현재 상황</h3>
-  <textarea class="free" id="nowstat" placeholder="독립경영 준비 단계(기술 습득·경영능력 제고·영농기반 마련)과 현재 상황"></textarea>
+  <textarea class="free" id="motive" placeholder="【예시】
+저는 한국농수산대학 졸업하며 '지속가능한 로컬 먹거리' 비전을 얻었습니다. 경기도 용인의 비옥한 토지에서 딸기 전문가가 되려고 합니다.
+
+딸기를 선택한 이유:
+- 계절 한정 상품이 아닌 통년 판로 가능(냉동, 가공)
+- 가족 중심 소규모 재배로 시작 용이
+- 고부가가치로 초기 자금 회수 빠름(1년차 하반기~)
+- 생산~판매 전 과정을 내가 관리 가능
+
+이제 현장에서 이를 실현하겠습니다."></textarea>
+
+  <h3 class="sub">현재 상황 (준비 현황)</h3>
+  <textarea class="free" id="nowstat" placeholder="【예시】
+◆ 기술 습득 단계
+- 한농대 2년 전공 교육 이수(딸기재배학, 경영학)
+- 겨울방학 선배농장 실습 2개월
+- 경기도농업기술원 교육 이수(16시간)
+→ 이론적 기반 충분, 실무 경험 쌓는 중
+
+◆ 영농기반 마련
+- 용인시농업기술센터와 협력(농지 리스트 확보)
+- 임차 계약 대기 중(1년차 5월 확정 예정)
+- 비닐시설 렌탈 사전 협력(시공일정 예약)
+- 초기 자금 준비 완료(개인 저축 1,500만원 + 부모 지원 3,500만원)
+
+◆ 시장 진입 준비
+- 직거래 판로 조사(로컬푸드마켓, 온라인 입점 신청)
+- SNS 채널 준비(브랜드명 정하고 계정 개설 예정)
+→ 1년차 6월 영농 개시, 11월부터 판매 가능"></textarea>
+
   <h3 class="sub">경영계획 (5개년)</h3>
-  <textarea class="free" id="bizplan" placeholder="연차별 목표, 자금 조달, 영농기술, 영농기반 구축, 경영 다각화, 교육훈련 이수, 판로·마케팅 전략 등" style="min-height:120px"></textarea>
+  <textarea class="free" id="bizplan" placeholder="【예시】
+
+【1년차: 기초 확립】
+- 목표: 안정적 기술 습득 + 판로 개척
+- 농지/판매: 임차 5,000㎡ → 연 500kg 수확 → 매출 3,500만원 (순이익 800만원)
+- 투자: 비닐시설 렌탈(800만원/년) + 농자재
+- 교육: 기술센터 월 2회 + 선배농 멘토링 주 1회
+
+【2년차: 확대 단계】
+- 농지 확대 + 온라인 입점(마켓컬리 등)
+- 연 1,200kg 수확 → 매출 7,000만원 (순이익 2,000만원)
+- 자동급수, 냉장고 도입 (900만원)
+- GAP인증 추진
+
+【3년차: 자체 기반 구축】
+- 농지 매입 시작(3,000㎡, 대출 1억원)
+- 연 1,800kg → 매출 1억원 돌파 (순이익 4,000만원)
+- 고용 창출(상시 1명 + 계절직 3명)
+- 냉장·포장실 확대(200㎡)
+
+【4~5년차: 안정 + 다각화】
+- 유기농인증 취득(4년차)
+- 양계 병행으로 소득 다각화(유정란)
+- 연 2,500kg → 매출 1.3억원 (순이익 6,000만원)
+- 지역 선도 농업인으로 성장
+
+【핵심 성공 요인】
+1) 초기 소규모 시작으로 리스크 최소화
+2) 기술센터 + 선배농으로 기술 확보
+3) 프리미엄 판로(직거래·온라인) 중심
+4) 3년차부터 단계적 시설 투자
+5) 4년차부터 다각화로 경영 안정성 제고" style="min-height:250px"></textarea>
 </div>
 
 <script>
