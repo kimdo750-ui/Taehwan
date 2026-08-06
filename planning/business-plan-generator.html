@@ -3,388 +3,242 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>사업계획서 자동생성 · 금융기관 제출용</title>
+<title>5개년 영농(창업) 계획서 · 작성 그대로</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
-  :root{
-    --primary:#2D5016;
-    --primary-light:#4A7C2C;
-    --primary-bg:#E8F2DE;
-    --accent:#C04A3B;
-    --accent-bg:#F6DEDA;
-    --paper:#F9FAFA;
-    --card:#FFFFFF;
-    --ink:#1C1C1C;
-    --ink-soft:#5A5A5A;
-    --line:#E5E5E5;
-    --shadow:0 1px 0 rgba(28,28,28,.04), 0 10px 30px -20px rgba(28,28,28,.4);
-  }
+  :root{ --bg:#F1F2EE; --paper:#FFF; --ink:#1C221C; --soft:#5f6a5c; --line:#B9BEB0; --line2:#DDE1D6; --ever:#26402A; --green:#3D7A34; --hl:#EEF3E7; }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  html,body{margin:0;padding:0;}
-  body{background:var(--paper);color:var(--ink);
-    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-    line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:900px;margin:0 auto;padding:30px 18px 60px;}
-  .back{font-size:12px;color:var(--primary);font-weight:800;margin-bottom:20px;}
-  .back a{color:var(--primary);text-decoration:none;cursor:pointer;}
-  .header{margin-bottom:30px;}
-  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--primary);margin:0 0 8px;}
-  h1{font-size:28px;line-height:1.3;font-weight:800;margin:0 0 10px;letter-spacing:-.02em;}
-  .lede{font-size:14px;color:var(--ink-soft);margin:0;line-height:1.55;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased;}
+  .bar{position:sticky;top:0;z-index:20;background:var(--ever);color:#fff;padding:9px 14px;display:flex;gap:8px;align-items:center;justify-content:space-between;}
+  .bar .ttl{font-size:13px;font-weight:800;}
+  .bar .acts{display:flex;gap:6px;}
+  .bar button{border:none;border-radius:8px;padding:8px 11px;font-size:12px;font-weight:800;font-family:inherit;cursor:pointer;background:#fff;color:var(--ever);}
+  .bar button.ghost{background:rgba(255,255,255,.15);color:#fff;}
 
-  .section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin:0 0 20px;box-shadow:var(--shadow);}
-  .section h2{font-size:16px;font-weight:800;margin:0 0 16px;letter-spacing:-.01em;}
+  .page{max-width:820px;margin:14px auto;background:var(--paper);padding:26px 22px 40px;box-shadow:0 10px 30px -18px rgba(0,0,0,.4);}
+  .doc-h{text-align:center;border-bottom:2.5px solid var(--ever);padding-bottom:12px;margin-bottom:6px;}
+  .doc-h h1{font-size:20px;font-weight:800;margin:0 0 4px;}
+  .doc-h .sub{font-size:11px;color:var(--soft);}
+  .doc-h .note{font-size:10.5px;color:var(--soft);margin-top:8px;line-height:1.5;text-align:left;background:var(--hl);border-radius:8px;padding:8px 10px;}
 
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 14px;}
-  .form-row.full{grid-template-columns:1fr;}
-  label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;}
-  select,input,textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 11px;font-size:14px;font-family:inherit;}
-  select:focus,input:focus,textarea:focus{outline:none;border-color:var(--primary);}
-  textarea{resize:vertical;min-height:80px;}
+  h2.sec{font-size:14px;font-weight:800;margin:20px 0 7px;color:var(--ink);border-left:4px solid var(--green);padding-left:8px;}
+  h3.sub{font-size:12px;font-weight:800;margin:12px 0 5px;color:var(--ever);}
+  .tip{font-size:10.5px;color:var(--soft);margin:2px 0 6px;}
 
-  .btn{display:inline-block;background:var(--primary);color:#fff;padding:12px 18px;border-radius:10px;
-    text-decoration:none;font-size:14px;font-weight:800;border:none;cursor:pointer;transition:background .2s;}
-  .btn:hover{background:var(--primary-light);}
-  .btn-block{width:100%;text-align:center;display:block;}
-  .btn-secondary{background:#666;}.btn-secondary:hover{background:#555;}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:5px 0;}
+  table{border-collapse:collapse;width:100%;min-width:520px;font-size:11.5px;}
+  table.narrow{min-width:0;}
+  th,td{border:1px solid var(--line);padding:3px 4px;text-align:center;vertical-align:middle;}
+  th{background:#EDEFE8;font-weight:700;color:#40473c;font-size:10.5px;white-space:nowrap;}
+  td.h{background:#F4F5F0;font-weight:700;white-space:nowrap;text-align:left;padding-left:6px;position:sticky;left:0;z-index:1;}
+  td.h.sub{background:#FAFBF7;font-weight:600;}
+  input,textarea,select{border:none;background:transparent;font-family:inherit;font-size:11.5px;color:var(--ink);width:100%;padding:5px 3px;text-align:center;}
+  input:focus,textarea:focus,select:focus{outline:none;background:var(--hl);}
+  td input{min-width:52px;}
+  .cellnum input{text-align:right;}
+  .autoc{background:#F4F5F0;font-weight:700;}
+  textarea.free{width:100%;border:1px solid var(--line);border-radius:6px;min-height:70px;padding:8px;text-align:left;line-height:1.55;font-size:12px;resize:vertical;background:#fff;}
+  textarea.free:focus{background:#fff;border-color:var(--green);}
+  .field{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0;}
+  .field label{font-size:11px;font-weight:700;color:var(--soft);min-width:64px;align-self:center;}
+  .field input.line{border:none;border-bottom:1px solid var(--line);text-align:left;flex:1;min-width:120px;padding:5px 2px;}
+  .field input.line:focus{background:var(--hl);}
+  .chkrow{font-size:11.5px;display:flex;align-items:center;gap:7px;margin:6px 0;}
+  .chkrow input{width:16px;height:16px;accent-color:var(--green);}
+  .pctwarn{font-size:10.5px;font-weight:700;text-align:right;margin-top:3px;}
+  .pctwarn.bad{color:#B23B2E;} .pctwarn.ok{color:var(--green);}
+  .miss{font-size:10px;color:#B23B2E;font-weight:700;}
 
-  .hint{background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:12px;
-    font-size:12px;line-height:1.5;color:var(--ink);margin:14px 0;}
-  .hint b{color:var(--primary);}
-
-  .preview{display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px;margin:0 0 20px;
-    box-shadow:var(--shadow);font-size:12px;line-height:1.8;color:var(--ink);}
-  .preview h1{font-size:24px;font-weight:800;margin:0 0 10px;text-align:center;border-bottom:2px solid var(--primary);padding-bottom:10px;}
-  .preview h2{font-size:16px;font-weight:800;margin:20px 0 10px;padding-top:10px;border-top:1px solid var(--line);}
-  .preview h3{font-size:13px;font-weight:800;margin:12px 0 8px;color:var(--primary);}
-  .preview p{margin:8px 0;line-height:1.6;}
-  .preview table{width:100%;border-collapse:collapse;margin:10px 0;}
-  .preview table th,.preview table td{border:1px solid var(--line);padding:8px;text-align:left;}
-  .preview table th{background:var(--primary-bg);font-weight:800;}
-  .preview .sign{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);}
-
-  .btns{display:flex;gap:10px;margin-top:16px;}
-  .reset{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:12px;font-size:13px;font-weight:800;
-    font-family:inherit;color:var(--ink);cursor:pointer;}
-
-  .step{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13px;}
-  .step-num{flex:0 0 24px;height:24px;background:var(--primary);color:#fff;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;font-weight:800;}
-  .step-text{color:var(--ink-soft);}
+  @media print{
+    body{background:#fff;} .bar{display:none;} .page{box-shadow:none;margin:0;max-width:none;padding:0;}
+    input:focus,textarea:focus{background:transparent;} .tw{overflow:visible;} table{min-width:0;} td.h{position:static;}
+    textarea.free{border:1px solid #999;} .tip{display:none;}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="back"><a onclick="history.back()">← 뒤로가기</a></div>
-  <div class="header">
-    <p class="eyebrow">사업계획서 · 금융기관 제출용</p>
-    <h1>사업계획서 자동생성</h1>
-    <p class="lede">기본 정보와 투입비용·수익 데이터를 입력하면, 금융기관 제출용 사업계획서를 자동으로 생성합니다. 한글 문서로 다운로드해 최종 정리할 수 있습니다.</p>
+<div class="bar">
+  <span class="ttl">5개년 영농계획서 · 작성</span>
+  <div class="acts">
+    <button onclick="window.print()">🖨 PDF/인쇄</button>
+    <button class="ghost" onclick="if(confirm('모두 지울까요?'))location.reload()">초기화</button>
+  </div>
+</div>
+
+<div class="page" id="page">
+  <div class="doc-h">
+    <h1>5개년 영농(창업) 계획서</h1>
+    <div class="sub">청년농업인(청년창업허가 지정법인) 영농의 착지지원사업</div>
+    <div class="note">※ 본인 명의의 영농기반(재산·자차) 현황 및 향후 영농계획을 작성(<b>부모 명의 기반은 제외</b>). 본인 명의 기반이 없으면 '현재'란에 공란, 향후 계획만 작성. · 성이 다 안 될 땐 <b>🖨 PDF/인쇄</b>로 저장해 Agrix 첨부하거나 한글로 옮기세요.</div>
   </div>
 
-  <div class="section">
-    <h2>👤 사업자 정보</h2>
-    <div class="form-row">
-      <div>
-        <label for="name">이름</label>
-        <input id="name" type="text" placeholder="예: 홍길동">
-      </div>
-      <div>
-        <label for="birth">생년월일</label>
-        <input id="birth" type="text" placeholder="예: 2000.01.15">
-      </div>
-    </div>
-    <div class="form-row">
-      <div>
-        <label for="address">주소</label>
-        <input id="address" type="text" placeholder="예: 서울시 강남구 테헤란로 123">
-      </div>
-      <div>
-        <label for="phone">전화번호</label>
-        <input id="phone" type="text" placeholder="예: 010-1234-5678">
-      </div>
-    </div>
-  </div>
+  <!-- 신청인 -->
+  <h2 class="sec">신청인</h2>
+  <div class="field"><label>성명</label><input class="line" id="name"><label>영농시작일</label><input class="line" id="birth"></div>
+  <div class="field"><label>주소</label><input class="line" id="addr"></div>
+  <div class="field"><label>연락처</label><input class="line" id="tel"><label>영농경력</label><input class="line" id="career" placeholder="예: 영농(영농업)"></div>
+  <div class="field"><label>영농의 유형</label><input class="line" id="etype" placeholder="독립경영(독립창업) / 농사 등"></div>
 
-  <div class="section">
-    <h2>🌾 사업 개요</h2>
-    <div class="form-row full">
-      <div>
-        <label for="crop3">작물/축산품</label>
-        <input id="crop3" type="text" placeholder="예: 포도 (가우라 품종)">
-      </div>
-    </div>
-    <div class="form-row">
-      <div>
-        <label for="scale3">경영 규모</label>
-        <input id="scale3" type="text" placeholder="예: 500평 (약 1,650m²)">
-      </div>
-      <div>
-        <label for="location">위치 (시도)</label>
-        <input id="location" type="text" placeholder="예: 경기도 이천시">
-      </div>
-    </div>
-    <div class="form-row full">
-      <div>
-        <label for="strategy">사업 전략</label>
-        <textarea id="strategy" placeholder="예: 고품질 포도 생산으로 도매시장 중심 판매. 2년차부터 직판 채널 추가. 5년차 브랜딩 및 수출 검토."></textarea>
-      </div>
-    </div>
-  </div>
+  <!-- 1. 일반현황 -->
+  <h2 class="sec">1. 일반현황</h2>
+  <h3 class="sub">1-1. 영농 유형</h3>
+  <div class="tw"><table id="t-type"></table></div>
+  <h3 class="sub">1-2. 농업경영 구성원 (본인 제외)</h3>
+  <div class="tw"><table id="t-member"></table></div>
 
-  <div class="section">
-    <h2>💰 재정 계획</h2>
-    <div class="form-row">
-      <div>
-        <label for="initCap">초기 투입비용 (원)</label>
-        <input id="initCap" type="number" placeholder="예: 50000000">
-      </div>
-      <div>
-        <label for="ownCap">자기자본 (원)</label>
-        <input id="ownCap" type="number" placeholder="예: 10000000">
-      </div>
-    </div>
-    <div class="form-row">
-      <div>
-        <label for="grant">정부 지원금 (원)</label>
-        <input id="grant" type="number" value="0" placeholder="예: 25000000">
-      </div>
-      <div>
-        <label for="loan">농협 대출 (원)</label>
-        <input id="loan" type="number" value="0" placeholder="예: 15000000">
-      </div>
-    </div>
-    <div class="form-row">
-      <div>
-        <label for="annualRev">연간 예상 매출 (원)</label>
-        <input id="annualRev" type="number" placeholder="예: 80000000">
-      </div>
-      <div>
-        <label for="annualNet">연간 예상 순이익 (원)</label>
-        <input id="annualNet" type="number" placeholder="예: 12000000">
-      </div>
-    </div>
-  </div>
+  <!-- 2. 농지 규모 -->
+  <h2 class="sec">2. 농지 규모 <span style="font-size:10px;color:var(--soft)">(단위: ㎡)</span></h2>
+  <div class="tw"><table id="t-land"></table></div>
 
-  <div class="section">
-    <h2>📊 목표 및 기대효과</h2>
-    <div class="form-row full">
-      <div>
-        <label for="goal1">1년차 목표</label>
-        <textarea id="goal1" placeholder="예: 기초 영농 기술 습득, 소규모 생산 (300평), 안정적 판매망 구축"></textarea>
-      </div>
-    </div>
-    <div class="form-row full">
-      <div>
-        <label for="goal3">3년차 목표</label>
-        <textarea id="goal3" placeholder="예: 규모 확대 (500평), 도매+직판 채널 혼합, 수익 안정화"></textarea>
-      </div>
-    </div>
-    <div class="form-row full">
-      <div>
-        <label for="goal6">6년차 목표</label>
-        <textarea id="goal6" placeholder="예: 최대 규모 달성, 브랜딩 완성, 수출 물량 10% 확보"></textarea>
-      </div>
-    </div>
-  </div>
+  <!-- 3. 소유지 -->
+  <h2 class="sec">3. 농지 소유지</h2>
+  <h3 class="sub">1) 매입 </h3>
+  <div class="tw"><table id="t-own" class="narrow"></table></div>
+  <h3 class="sub">2) 임차</h3>
+  <div class="tw"><table id="t-rent" class="narrow"></table></div>
+  <p class="tip">※ 현재는 리·법·지법까지, 향후 포함지는 리·법까지 기재</p>
 
-  <div class="section">
-    <h2>⚠️ 위험 관리</h2>
-    <div class="form-row full">
-      <div>
-        <label for="risks">예상 위험 요소와 대응책</label>
-        <textarea id="risks" placeholder="예:
-① 가격 변동 위험: KAMIS 정보로 사전 모니터링, 계약 재배 활용
-② 작황 부진: 농업기술센터 교육 참여, 예방약제 적극 사용
-③ 자금 부족: 연간 수익의 15% 이상 적립 기금 마련
-④ 판매 부진: 도매+직판 채널 다층화로 위험 분산"></textarea>
-      </div>
-    </div>
-  </div>
+  <!-- 4. 시설 -->
+  <h2 class="sec">4. 농업물 사육시설 <span style="font-size:10px;color:var(--soft)">(단위: ㎡, 경종기준 / 추산시 별도 표기)</span></h2>
+  <div class="tw"><table id="t-fac"></table></div>
 
-  <button class="btn btn-block" onclick="previewPlan()">📋 사업계획서 미리보기</button>
+  <!-- 5. 농기계 -->
+  <h2 class="sec">5. 농기계 (보유 및 향보계획)</h2>
+  <div class="tw"><table id="t-equip"></table></div>
 
-  <div id="preview" class="preview"></div>
+  <!-- 6. 자금조달 -->
+  <h2 class="sec">6. 자금조달 계획 <span style="font-size:10px;color:var(--soft)">(단위: 만원)</span></h2>
+  <div class="tw"><table id="t-fund" class="narrow"></table></div>
 
-  <div style="display:none;" id="btnGroup">
-    <div class="btns">
-      <button class="btn" onclick="downloadTxt()">📄 TXT 다운로드</button>
-      <button class="btn btn-secondary" onclick="copyToClipboard()">📋 복사하기</button>
-      <button class="reset" onclick="resetAll()">초기화</button>
-    </div>
-  </div>
+  <!-- 7. 역량 -->
+  <h2 class="sec">7. 농업경영 역량</h2>
+  <h3 class="sub">1) 학교 교육</h3>
+  <div class="tw"><table class="narrow"><thead><tr><th>학교명/학과</th><th>재학기간</th><th>관련 전공과목</th><th>이수시간·학점</th></tr></thead>
+    <tbody><tr><td><input id="sch_name" style="text-align:left"></td><td><input id="sch_term"></td><td><input id="sch_major"></td><td><input id="sch_hr"></td></tr></tbody></table></div>
+  <p class="tip">※ 고등학교 졸업(중학교) 이상이면 반드시 기재 → 개인역량 항공교육 맨 밑 항목</p>
+  <h3 class="sub">2) 사이 교육</h3>
+  <div class="tw"><table class="narrow"><thead><tr><th>교육기관</th><th>교육과정명</th><th>기간</th><th>시간</th></tr></thead>
+    <tbody id="soc-body"></tbody></table></div>
+  <h3 class="sub">4) 자격증 및 인증</h3>
+  <div class="tw"><table class="narrow"><thead><tr><th>자격증·인증명</th><th>번호</th><th>발행기관</th></tr></thead>
+    <tbody id="cert-body"></tbody></table></div>
+  <h3 class="sub">5) 경영관리 현황 <span style="font-size:10px;color:var(--soft)">(독립경영 외에는 작성 제외)</span></h3>
+  <div id="mgmt-box"></div>
 
-  <div class="section" style="background:var(--primary-bg);border-color:var(--primary);">
-    <h2>💡 작성 팁</h2>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-text"><b>투입비용:</b> <a href="investment-cost.html" style="color:var(--primary);text-decoration:none;">투입비용 계산기</a>에서 구한 금액 복사</div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-text"><b>수익 데이터:</b> <a href="profit-simulator.html" style="color:var(--primary);text-decoration:none;">수익 시뮬레이션</a>에서 구한 매출·순이익 복사</div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-text"><b>전략 및 목표:</b> 현실적이면서도 도전적인 목표 기술 (3년, 6년 구간)</div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-text"><b>위험 관리:</b> KREI·KAMIS 데이터 기반 위험 요소와 구체적 대응책 명기</div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-text"><b>다운로드 후:</b> 한글 문서로 최종 정리, 농협·농업기관 제출 전 검토</div>
-    </div>
+  <!-- 8. 판매·마케팅 -->
+  <h2 class="sec">8. 판매·마케팅 계획 <span style="font-size:10px;color:var(--soft)">(비중 %)</span></h2>
+  <div class="tw"><table id="t-sell" class="narrow"></table></div>
+  <div class="pctwarn" id="sellwarn"></div>
+  <h3 class="sub">판매·마케팅 전략</h3>
+  <textarea class="free" id="mktstrat" placeholder="스토리텔링·브랜딩·SNS·온라인도구 등 구체적 전략"></textarea>
 
-    <div class="hint" style="margin-top:16px;">
-      <b>⚠️ 중요:</b> 이 도구에서 생성한 계획서는 기초 템플릿입니다.
-      <b>반드시 농업기술센터·농협 담당자와 함께 검토</b>하여 지역 실정·금융기관 요구사항을 반영해서 최종 제출하세요.
-    </div>
-  </div>
+  <!-- 9. 홍보 -->
+  <h2 class="sec">9. 홍보 계획 <span style="font-size:10px;color:var(--soft)">(비중 %)</span></h2>
+  <div class="tw"><table id="t-promo" class="narrow"></table></div>
+  <div class="pctwarn" id="promowarn"></div>
 
+  <!-- 10. 장애 상황 -->
+  <h2 class="sec">10. 장애 및 위험상황 관리 계획</h2>
+  <h3 class="sub">내부 장애 원인 → 대응방법</h3>
+  <div class="tw"><table class="narrow"><thead><tr><th style="width:45%">내부 장애 원인</th><th>대응방법</th></tr></thead>
+    <tbody><tr><td><input class="ta" style="text-align:left"></td><td><input class="ta" style="text-align:left"></td></tr>
+    <tr><td><input class="ta" style="text-align:left"></td><td><input class="ta" style="text-align:left"></td></tr></tbody></table></div>
+  <h3 class="sub">외부 위험상황 → 대응방법</h3>
+  <div class="tw"><table class="narrow"><thead><tr><th style="width:45%">외부 위험상황</th><th>대응방법</th></tr></thead>
+    <tbody><tr><td><input class="ta" style="text-align:left"></td><td><input class="ta" style="text-align:left"></td></tr>
+    <tr><td><input class="ta" style="text-align:left"></td><td><input class="ta" style="text-align:left"></td></tr></tbody></table></div>
+
+  <!-- 11. 교육훈련 -->
+  <h2 class="sec">11. 교육훈련 계획</h2>
+  <div class="tw"><table id="t-edu"></table></div>
+
+  <!-- 12. 영농동기 -->
+  <h2 class="sec">12. 영농 동기 및 경영계획 <span style="font-size:10px;color:var(--soft)">(3페이지 이내)</span></h2>
+  <h3 class="sub">영농 동기</h3>
+  <textarea class="free" id="motive" placeholder="영농 동기, 목표시장, 지역 공동체와 함께 성장하기 위한 노력·계획"></textarea>
+  <h3 class="sub">현재 상황</h3>
+  <textarea class="free" id="nowstat" placeholder="독립경영 준비 단계(기술 습득·경영능력 제고·영농기반 마련)과 현재 상황"></textarea>
+  <h3 class="sub">경영계획 (5개년)</h3>
+  <textarea class="free" id="bizplan" placeholder="연차별 목표, 자금 조달, 영농기술, 영농기반 구축, 경영 다각화, 교육훈련 이수, 판로·마케팅 전략 등" style="min-height:120px"></textarea>
 </div>
 
 <script>
-function won(n){ return Math.round(n).toLocaleString(); }
+const YEARS=['현재','1년차','2년차','3년차','4년차','5년차'];
+function head(first){ return '<thead><tr><th>'+first+'</th>'+YEARS.map(y=>'<th>'+y+'</th>').join('')+'</tr></thead>'; }
+function numRow(label,cls){ let c='<td class="h'+(cls?' sub':'')+'">'+label+'</td>'; for(let i=0;i<6;i++)c+='<td class="cellnum"><input type="number" inputmode="numeric"></td>'; return '<tr>'+c+'</tr>'; }
+function txtRow(label){ let c='<td class="h">'+label+'</td>'; for(let i=0;i<6;i++)c+='<td><input></td>'; return '<tr>'+c+'</tr>'; }
 
-function previewPlan(){
-  const name = document.getElementById('name').value || '(이름)';
-  const birth = document.getElementById('birth').value || '(생년월일)';
-  const address = document.getElementById('address').value || '(주소)';
-  const phone = document.getElementById('phone').value || '(전화)';
-  const crop = document.getElementById('crop3').value || '(작물명)';
-  const scale = document.getElementById('scale3').value || '(규모)';
-  const location = document.getElementById('location').value || '(위치)';
-  const strategy = document.getElementById('strategy').value || '(전략)';
+// 1-1 영농유형
+$('t-type').innerHTML=head('구분')+'<tbody>'+txtRow('주요품목')+txtRow('부품목')+'</tbody>';
+// 1-2 구성원
+$('t-member').innerHTML=head('구분')+'<tbody>'+numRow('가족(공동농업)')+numRow('고용 임금')+numRow('고용 임금')+numRow('고용 일용(명)')+'</tbody>';
+// 2 농지규모
+let landB='';
+[['논','매입 '],['논','임차'],['밭','매입 '],['밭','임차'],['과수원','매입 '],['과수원','임차'],['목이지','매입 '],['목이지','임차']].forEach(([a,b])=>landB+=numRow(a+' '+b,true));
+landB+=numRow('합계 매입 ')+numRow('합계 임차');
+$('t-land').innerHTML=head('구분')+'<tbody>'+landB+'</tbody>';
+// 3 소유지
+function locTable(kind){ let b='<thead><tr><th>순번</th><th>현재 주소</th><th>지목</th><th>면적</th><th>향후 '+kind+' 포함지</th><th>지목</th><th>면적</th></tr></thead><tbody>';
+  for(let i=1;i<=3;i++)b+='<tr><td>'+i+'</td><td><input style="text-align:left"></td><td><input></td><td><input></td><td><input style="text-align:left"></td><td><input></td><td><input></td></tr>';
+  return b+'</tbody>'; }
+$('t-own').innerHTML=locTable('매입'); $('t-rent').innerHTML=locTable('임차');
+// 4 시설
+let facB='';
+[['정리시설','매입 '],['정리시설','임차'],['비닐시설','매입 '],['비닐시설','임차'],['가공시설','매입 '],['가공시설','임차']].forEach(([a,b])=>facB+=numRow(a+' '+b,true));
+$('t-fac').innerHTML=head('구분')+'<tbody>'+facB+'</tbody>';
+// 5 농기계
+$('t-equip').innerHTML=head('항목')+'<tbody>'+txtRow('트랙터/관리기')+txtRow('씨앗·비료·약제지원')+txtRow('기타')+'</tbody>';
+// 6 자금조달
+let fundB='<thead><tr><th>구분</th><th>자금내</th><th>정책자금 최대</th><th>합계</th></tr></thead><tbody>';
+['농지','시설','농기계·장비','농업자재','이자비용'].forEach(f=>{
+  fundB+='<tr><td class="h">'+f+'</td><td class="cellnum"><input type="number" class="fs" inputmode="numeric"></td><td class="cellnum"><input type="number" class="fl" inputmode="numeric"></td><td class="cellnum autoc"><span class="frowsum">–</span></td></tr>';
+});
+fundB+='<tr><td class="h">합계</td><td class="cellnum autoc"><span id="ftotS">–</span></td><td class="cellnum autoc"><span id="ftotL">–</span></td><td class="cellnum autoc"><span id="ftotA">–</span></td></tr>';
+$('t-fund').innerHTML=fundB+'</tbody>';
+// 7 사이교육/자격 rows
+let socB=''; for(let i=0;i<3;i++)socB+='<tr><td><input style="text-align:left"></td><td><input style="text-align:left"></td><td><input></td><td><input></td></tr>';
+$('soc-body').innerHTML=socB;
+let certB=''; for(let i=0;i<3;i++)certB+='<tr><td><input style="text-align:left"></td><td><input></td><td><input></td></tr>';
+$('cert-body').innerHTML=certB;
+// 경영관리 체크
+const mgmtQ=['연간 경영계획을 작성·보관하는가?','최근 1년 경영장부(회계)를 작성하는가?','월 단위로 경영장부를 관리하는가?','주기적으로 영농일지를 작성하는가?','최근 영농일지를 보관하는가?','고객리스트를 업무상 활용하는가?'];
+$('mgmt-box').innerHTML='<label class="chkrow"><input type="checkbox" id="preddel" onchange="togMgmt()">독립경영 외에서는 (이 항목 작성 제외)</label><div id="mgmt-list">'+mgmtQ.map(q=>'<div class="chkrow"><input type="checkbox"><span>'+q+'</span></div>').join('')+'</div>';
+window.togMgmt=()=>{ document.getElementById('mgmt-list').style.opacity=$('preddel').checked?'.35':'1'; document.getElementById('mgmt-list').style.pointerEvents=$('preddel').checked?'none':'auto'; };
+// 8 판매 / 9 홍보 (현재/향후 %)
+function pctTable(rows,cls){ let b='<thead><tr><th>구분</th><th>현재(%)</th><th>향후  %(%)</th></tr></thead><tbody>';
+  rows.forEach(r=>b+='<tr><td class="h">'+r+'</td><td class="cellnum"><input type="number" class="'+cls+'-now" inputmode="numeric"></td><td class="cellnum"><input type="number" class="'+cls+'-aft" inputmode="numeric"></td></tr>');
+  b+='<tr><td class="h">합계</td><td class="cellnum autoc"><span id="'+cls+'-sn">0</span></td><td class="cellnum autoc"><span id="'+cls+'-sa">0</span></td></tr>';
+  return b+'</tbody>'; }
+$('t-sell').innerHTML=pctTable(['시장몰·지거류','온라인(컬리·오늘도착)','로컬·공동구매','도매(공판장)'],'sell');
+$('t-promo').innerHTML=pctTable(['SNS 활용','전시회 참가','방송·매체','기타'],'promo');
+// 11 교육훈련
+let eduB='<thead><tr><th>영역</th><th>1년차</th><th>2년차</th><th>3년차</th></tr></thead><tbody>';
+['교육내용','이행방법'].forEach(r=>{ eduB+='<tr><td class="h">'+r+'</td><td><input style="text-align:left"></td><td><input style="text-align:left"></td><td><input style="text-align:left"></td></tr>'; });
+$('t-edu').innerHTML=eduB+'</tbody>';
 
-  const initCap = parseFloat(document.getElementById('initCap').value) || 0;
-  const ownCap = parseFloat(document.getElementById('ownCap').value) || 0;
-  const grant = parseFloat(document.getElementById('grant').value) || 0;
-  const loan = parseFloat(document.getElementById('loan').value) || 0;
-  const annualRev = parseFloat(document.getElementById('annualRev').value) || 0;
-  const annualNet = parseFloat(document.getElementById('annualNet').value) || 0;
-
-  const goal1 = document.getElementById('goal1').value || '(1년차 목표)';
-  const goal3 = document.getElementById('goal3').value || '(3년차 목표)';
-  const goal6 = document.getElementById('goal6').value || '(6년차 목표)';
-  const risks = document.getElementById('risks').value || '(위험 요소와 대응책)';
-
-  const breakeven = annualRev > 0 ? Math.ceil((initCap - ownCap - grant) / (annualNet || 1)) : '미산정';
-
-  const html = `
-    <h1>영농사업 사업계획서</h1>
-
-    <h2>1. 사업자 정보</h2>
-    <p><b>성명:</b> ${name}</p>
-    <p><b>생년월일:</b> ${birth}</p>
-    <p><b>주소:</b> ${address}</p>
-    <p><b>연락처:</b> ${phone}</p>
-
-    <h2>2. 사업 개요</h2>
-    <h3>2.1 사업 내용</h3>
-    <p><b>작물/축산품:</b> ${crop}</p>
-    <p><b>경영 규모:</b> ${scale}</p>
-    <p><b>위치:</b> ${location}</p>
-
-    <h3>2.2 사업 전략</h3>
-    <p>${strategy}</p>
-
-    <h2>3. 재정 계획</h2>
-    <h3>3.1 초기 투입비용</h3>
-    <table>
-      <tr><th>항목</th><th>금액</th></tr>
-      <tr><td>합계 초기 투입비</td><td>${won(initCap)}원</td></tr>
-    </table>
-
-    <h3>3.2 자금 조달</h3>
-    <table>
-      <tr><th>자금원</th><th>금액</th></tr>
-      <tr><td>자기자본</td><td>${won(ownCap)}원</td></tr>
-      <tr><td>정부 지원금</td><td>${won(grant)}원</td></tr>
-      <tr><td>농협 대출</td><td>${won(loan)}원</td></tr>
-      <tr><td><b>합계</b></td><td><b>${won(ownCap+grant+loan)}원</b></td></tr>
-    </table>
-
-    <h3>3.3 연간 수익성</h3>
-    <table>
-      <tr><th>항목</th><th>금액</th></tr>
-      <tr><td>연간 매출</td><td>${won(annualRev)}원</td></tr>
-      <tr><td>연간 순이익</td><td>${won(annualNet)}원</td></tr>
-      <tr><td>수익률</td><td>${annualRev>0 ? (annualNet/annualRev*100).toFixed(1) : '0'}%</td></tr>
-      <tr><td>손익분기점 (년)</td><td>${breakeven}년</td></tr>
-    </table>
-
-    <h2>4. 목표 설정</h2>
-    <h3>4.1 1년차 목표</h3>
-    <p>${goal1}</p>
-
-    <h3>4.2 3년차 목표</h3>
-    <p>${goal3}</p>
-
-    <h3>4.3 6년차 목표 (의무영농 종료)</h3>
-    <p>${goal6}</p>
-
-    <h2>5. 위험 관리</h2>
-    <p>${risks}</p>
-
-    <h2>6. 기대효과</h2>
-    <p>• 안정적 농업소득 창출 및 경제적 자립</p>
-    <p>• 농업 기술 축적 및 지역 농업 발전 기여</p>
-    <p>• 지속가능한 영농 사업 모델 구축</p>
-
-    <div class="sign">
-      <p>위 사항이 사실임을 증명합니다.</p>
-      <p>작성일: ${new Date().toLocaleDateString('ko-KR')}</p>
-      <p>사업자: _________________ (인)</p>
-    </div>`;
-
-  document.getElementById('preview').innerHTML = html;
-  document.getElementById('preview').style.display = 'block';
-  document.getElementById('btnGroup').style.display = 'block';
-  setTimeout(()=>document.getElementById('preview').scrollIntoView({behavior:'smooth',block:'start'}), 150);
-}
-
-function downloadTxt(){
-  const content = document.getElementById('preview').innerText;
-  const element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-  element.setAttribute('download', '영농사업계획서_' + new Date().toISOString().slice(0,10) + '.txt');
-  element.style.display = 'none';
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
-}
-
-function copyToClipboard(){
-  const content = document.getElementById('preview').innerText;
-  navigator.clipboard.writeText(content).then(()=>{
-    alert('사업계획서가 클립보드에 복사되었습니다.\n한글이나 다른 문서 편집 프로그램에 붙여넣기(Ctrl+V)하세요.');
+// live calcs: fund sums + pct sums
+function num(el){ const v=parseFloat(el.value); return isNaN(v)?0:v; }
+function recompute(){
+  // fund
+  const rows=$('t-fund').querySelectorAll('tbody tr');
+  let tS=0,tL=0;
+  for(let i=0;i<rows.length-1;i++){
+    const s=num(rows[i].querySelector('.fs')), l=num(rows[i].querySelector('.fl'));
+    rows[i].querySelector('.frowsum').textContent=(s||l)?(s+l).toLocaleString():'–';
+    tS+=s; tL+=l;
+  }
+  $('ftotS').textContent=tS.toLocaleString(); $('ftotL').textContent=tL.toLocaleString(); $('ftotA').textContent=(tS+tL).toLocaleString();
+  // pct
+  ['sell','promo'].forEach(c=>{
+    let sn=0,sa=0; document.querySelectorAll('.'+c+'-now').forEach(e=>sn+=num(e)); document.querySelectorAll('.'+c+'-aft').forEach(e=>sa+=num(e));
+    $(c+'-sn').textContent=sn; $(c+'-sa').textContent=sa;
+    const w=$(c+'warn'); if(sn||sa){ w.textContent='향후 비중 '+sa+'% (100% 권장)'; w.className='pctwarn'+(Math.abs(sa-100)<0.5?' ok':' bad'); } else w.textContent='';
   });
 }
-
-function resetAll(){
-  document.getElementById('name').value = '';
-  document.getElementById('birth').value = '';
-  document.getElementById('address').value = '';
-  document.getElementById('phone').value = '';
-  document.getElementById('crop3').value = '';
-  document.getElementById('scale3').value = '';
-  document.getElementById('location').value = '';
-  document.getElementById('strategy').value = '';
-  document.getElementById('initCap').value = '';
-  document.getElementById('ownCap').value = '';
-  document.getElementById('grant').value = '0';
-  document.getElementById('loan').value = '0';
-  document.getElementById('annualRev').value = '';
-  document.getElementById('annualNet').value = '';
-  document.getElementById('goal1').value = '';
-  document.getElementById('goal3').value = '';
-  document.getElementById('goal6').value = '';
-  document.getElementById('risks').value = '';
-  document.getElementById('preview').style.display = 'none';
-  document.getElementById('btnGroup').style.display = 'none';
-}
+document.addEventListener('input',recompute);
+recompute();
+function $(id){return document.getElementById(id);}
 </script>
 </body>
 </html>
